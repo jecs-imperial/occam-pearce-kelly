@@ -1,7 +1,7 @@
 'use strict';
 
 const Vertex = require('./vertex'),
-      arrayUtil = require('../util/array');
+      arrayUtil = require('./util/array');
 
 class DirectedAcyclicGraph {
   constructor(vertexMap) {

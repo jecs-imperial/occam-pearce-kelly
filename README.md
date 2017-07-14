@@ -47,9 +47,9 @@ If there are cycles present, they will be amongst the remaining edges:
     
 The algorithm will also leave both the incoming and outgoing edges of the topologically sorted vertices intact and these are available by way of the requisite getters:
   
-    const firstTopologicallySortedVertex = first(topologicallySortedVertices),
-          incomingEdges = firstTopologicallySortedVertex.getIncomingEdges(),
-          outgoingEdges = firstTopologicallySortedVertex.getOutgoingEdges();
+          
+          
+          DirectedAcyclicGraph.sortVertices
     
 ## Installation
 
