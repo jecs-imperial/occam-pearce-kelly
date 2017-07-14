@@ -12,7 +12,44 @@ An implementation of the Pearce-Kelly algorithm.
 
 ## Introduction
 
-To come.
+This algorithm will topologically sort a graph, if there are no cycles, otherwise it will report the cycles. The [Wikipedia page on topological sorting](https://en.wikipedia.org/wiki/Topological_sorting) has a brief explanation.
+    
+A graph can be constructed with the `fromVertexLiterals()` factory method as follows:
+
+    const kahn = require('occam-kahn');
+
+    const { Graph } = kahn;
+
+    const graph = Graph.fromVertexLiterals(
+    
+      ['a', ['b']],
+      ['b', ['c']],
+      ['d', ['c']],
+      ['e', []],
+      ['f', ['g']],
+      ['h', ['g']]
+      
+    );
+    
+Note that the array of names that is the second element of each literal gives the *ancestors* of the vertex and not its descendants. This is the preferred method when constructing a dependency tree, because a resource's dependencies are usually stipulated whereas the converse is not usually true.
+   
+It is possible to check whether there are any cycles present:
+
+    const cyclesPresent = graph.areCyclesPresent();
+    
+If there are no cycles present, the topologically sorted vertices of the graph are available:
+    
+    const topologicallySortedVertices = graph.getTopologicallySortedVertices();
+    
+If there are cycles present, they will be amongst the remaining edges:
+
+    const remainingEdges = graph.getRemainingEdges();
+    
+The algorithm will also leave both the incoming and outgoing edges of the topologically sorted vertices intact and these are available by way of the requisite getters:
+  
+    const firstTopologicallySortedVertex = first(topologicallySortedVertices),
+          incomingEdges = firstTopologicallySortedVertex.getIncomingEdges(),
+          outgoingEdges = firstTopologicallySortedVertex.getOutgoingEdges();
     
 ## Installation
 
