@@ -76,9 +76,10 @@ class DirectedAcyclicGraph {
   
   addEdge(edge) {
     const sourceVertexName = edge.getSourceVertexName(),
-          targetVertexName = edge.getTargetVertexName();
-    
-    this.addEdgeByVertexNames(sourceVertexName, targetVertexName);
+          targetVertexName = edge.getTargetVertexName(),
+          cyclicVertexNames = this.addEdgeByVertexNames(sourceVertexName, targetVertexName);
+
+    return cyclicVertexNames;
   }
 
   validateEdge(sourceVertex, targetVertex) {
