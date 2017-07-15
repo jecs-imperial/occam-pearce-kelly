@@ -31,7 +31,9 @@ This algorithm maintains a topological ordering of a directed acyclic graph. It 
              
            ],
            graph = Graph.fromVertexLiterals(vertexLiterals);
-           directedAcyclicGraph = DirectedAcyclicGraph.fromTopologicallyOrderedVertices(topologicallyOrderedVertices);
+           directedAcyclicGraph = 
+           
+             DirectedAcyclicGraph.fromTopologicallyOrderedVertices(topologicallyOrderedVertices);
             
 Now edges and vertices can be added to this graph incrementally:
 
@@ -41,23 +43,23 @@ Now edges and vertices can be added to this graph incrementally:
             
     directedAcyclicGraph.addVertexByName(vertexName);
     
-    directedAcyclicGraph.addEdgeByVertexNames('i');
+    directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
     
 There is no need to added vertices explicitly, as the example above shows.
 
-At any point the `mapVertex()` and `forEachVertex()` methods can be invoked to make use of the graph vertices. There are also methods on the vertices that can be used to recover pertinent information about them. For example, in what follows the topologically sorted predecessors of each vertex are recovered:
+At any point the `mapVertex()` and `forEachVertex()` methods can be invoked to make use of the graph vertices. There are also methods on the vertices that can be used to recover pertinent information about them. For example, in what follows the topologically ordered predecessors of each vertex are recovered:
 
     directedAcyclicGraph.forEachVertex(function(vertex) {
       const vertexName = vertex.getName(),
             predecessorVertices = vertex.getPredecessorVertices();
     
-      DirectedAcyclicGraph.sortVertices(predecessorVertices);
+      DirectedAcyclicGraph.orderVertices(predecessorVertices);
       
       ...
     
     });
     
-Note that the predecessor vertices are effectively already topologically sorted in that each carries a unique index that is indicative of the soring. All the static `sort()` method of the `DirectedAcyclicGraph` class itself does it order the array that is returned accordingly.  
+Note that the predecessor vertices are effectively already sorted in that each carries a unique index that is indicative of the underlying topological ordering. All the static `sortVertices()` method of the `DirectedAcyclicGraph` class itself does is to sort the array that is returned according to this ordering.  
 
 ## Installation
 
