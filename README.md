@@ -47,7 +47,7 @@ Now edges and vertices can be added to the directed acyclic graph incrementally:
     
      directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
         
-There is no need to added vertices explicitly, as the example above shows. The return value of the `addEdgeByVertexNames()` will be `null` if the edge does not break the topological ordering. If it does, the cycle that breaks the ordering will be returned in the form of an array of vertex names. 
+Note that there is no need to added vertices explicitly. The return value of the `addEdgeByVertexNames()` will be `null` if the edge does not break the topological ordering. If it does, the cycle that breaks the ordering will be returned in the form of an array of vertex names. 
 
 At any point the `mapVertex()` and `forEachVertex()` methods can be invoked to make use of the graph vertices. There are also methods on the vertices that can be used to recover pertinent information about them. For example, in what follows the topologically ordered predecessors of each vertex are recovered:
 
