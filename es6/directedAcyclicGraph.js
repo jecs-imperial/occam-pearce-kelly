@@ -61,7 +61,17 @@ class DirectedAcyclicGraph {
       }
     }
 
-    return cyclicVertices;
+    let cyclicVertexNames;
+
+    if (cyclicVertices !== null) {
+      cyclicVertexNames = cyclicVertices.forEach(function(cyclicVertex) {
+        const cyclicVertexName = cyclicVertex.getName();
+
+        return cyclicVertexName;
+      });
+    }
+
+    return cyclicVertexNames;
   }
 
   validateEdge(sourceVertex, targetVertex) {
