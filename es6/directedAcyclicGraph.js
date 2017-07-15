@@ -137,6 +137,13 @@ class DirectedAcyclicGraph {
       callback(vertex);
     }.bind(this));
   }
+  
+  fromNothing() {
+    const vertexMap = {},
+          directedAcyclicGraph = new DirectedAcyclicGraph(vertexMap);
+
+    return directedAcyclicGraph;
+  }
 
   static fromTopologicallyOrderedVertices(topologicallyOrderedVertices) {
     const vertexMap = vertexMapFromTopologicallyOrderedVertices(topologicallyOrderedVertices);
