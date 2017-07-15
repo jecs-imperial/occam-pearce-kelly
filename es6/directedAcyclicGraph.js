@@ -121,10 +121,10 @@ class DirectedAcyclicGraph {
     }.bind(this));
   }
 
-  static fromTopologicallySortedVertices(topologicallySortedVertices) {
-    const vertexMap = vertexMapFromTopologicallySortedVertices(topologicallySortedVertices);
+  static fromTopologicallyOrderedVertices(topologicallyOrderedVertices) {
+    const vertexMap = vertexMapFromTopologicallyOrderedVertices(topologicallyOrderedVertices);
     
-    addEdgesToVertices(topologicallySortedVertices, vertexMap);
+    addEdgesToVertices(topologicallyOrderedVertices, vertexMap);
     
     const directedAcyclicGraph = new DirectedAcyclicGraph(vertexMap);
     
@@ -149,11 +149,11 @@ class DirectedAcyclicGraph {
 
 module.exports = DirectedAcyclicGraph;
 
-function vertexMapFromTopologicallySortedVertices(topologicallySortedVertices) {
+function vertexMapFromTopologicallyOrderedVertices(topologicallyOrderedVertices) {
   const vertexMap = {};
   
-  topologicallySortedVertices.forEach(function(topologicallySortedVertex, index) {
-    const name = topologicallySortedVertex.getName(),
+  topologicallyOrderedVertices.forEach(function(topologicallyOrderedVertex, index) {
+    const name = topologicallyOrderedVertex.getName(),
           vertex = Vertex.fromNameAndIndex(name, index);
 
     vertexMap[name] = vertex;
@@ -162,9 +162,9 @@ function vertexMapFromTopologicallySortedVertices(topologicallySortedVertices) {
   return vertexMap;
 }
 
-function addEdgesToVertices(topologicallySortedVertices, vertexMap) {
-  topologicallySortedVertices.forEach(function(topologicallySortedVertex) {
-    topologicallySortedVertex.forEachOutgoingEdge(function(outgoingEdge) {
+function addEdgesToVertices(topologicallyOrderedVertices, vertexMap) {
+  topologicallyOrderedVertices.forEach(function(topologicallyOrderedVertex) {
+    topologicallyOrderedVertex.forEachOutgoingEdge(function(outgoingEdge) {
       const sourceVertex = outgoingEdge.getSourceVertex(),
             targetVertex = outgoingEdge.getTargetVertex(),
             sourceVertexName = sourceVertex.getName(),

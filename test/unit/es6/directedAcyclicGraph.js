@@ -7,12 +7,12 @@ const DirectedAcyclicGraph = require('../../../es6/directedAcyclicGraph');
 const { assert } = chai;
 
 describe('es6/common/DirectedAcyclicGraph', function() {
-  describe('#fromTopologicallySortedVertices', function() {
+  describe('#fromTopologicallyOrderedVertices', function() {
     describe('given an empty list of topologically sorted vertices', function() {
-      const topologicallySortedVertices = [];
+      const topologicallyOrderedVertices = [];
 
       xit('Returns an instance of the DirectedAcyclicGraph class', function() {
-        const directedAcyclicGraph = DirectedAcyclicGraph.fromTopologicallySortedVertices(topologicallySortedVertices);
+        const directedAcyclicGraph = DirectedAcyclicGraph.fromTopologicallyOrderedVertices(topologicallyOrderedVertices);
 
         assert.instanceOf(directedAcyclicGraph, DirectedAcyclicGraph);
       });
@@ -29,7 +29,7 @@ describe('es6/common/DirectedAcyclicGraph', function() {
       ];
 
       it('Returns a directed acyclic graph with the requisite sorted vertices', function() {
-        const directedAcyclicGraph = DirectedAcyclicGraph.fromTopologicallySortedVertices(topologicallySortedVertices);
+        const directedAcyclicGraph = DirectedAcyclicGraph.fromTopologicallyOrderedVertices(topologicallyOrderedVertices);
 
         assert.instanceOf(directedAcyclicGraph, DirectedAcyclicGraph);
       });
