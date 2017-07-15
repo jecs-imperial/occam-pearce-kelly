@@ -8,6 +8,15 @@ class DirectedAcyclicGraph {
     this.vertexMap = vertexMap;
   }
 
+  retrieveVertexByVertexName(vertexName) {
+    const vertexPresent = this.vertexMap.hasOwnProperty(vertexName),
+          vertex = vertexPresent ?
+                    this.vertexMap[vertexName] :
+                      null;
+
+    return vertex;
+  }
+
   addVertexByVertexName(vertexName) {
     const vertexPresent = this.vertexMap.hasOwnProperty(vertexName);
 
