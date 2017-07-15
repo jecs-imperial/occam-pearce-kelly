@@ -73,6 +73,13 @@ class DirectedAcyclicGraph {
 
     return cyclicVertexNames;
   }
+  
+  addEdge(edge) {
+    const sourceVertexName = edge.getSourceVertexName(),
+          targetVertexName = edge.getTargetVertexName();
+    
+    this.addEdgeByVertexNames(sourceVertexName, targetVertexName);
+  }
 
   validateEdge(sourceVertex, targetVertex) {
     let cyclicVertices = null;
