@@ -61,7 +61,7 @@ class DirectedAcyclicGraph {
       }
     }
 
-    let cyclicVertexNames;
+    let cyclicVertexNames = null;
 
     if (cyclicVertices !== null) {
       cyclicVertexNames = cyclicVertices.forEach(function(cyclicVertex) {
