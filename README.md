@@ -86,7 +86,7 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 ## Acknowledgements
 
-This implementation was closely based on the following:
+This implementation is based on the Peace-Kelly algorithm as given in the following paper:
 
 http://homepages.ecs.vuw.ac.nz/~djp/files/PK-JEA07.pdf
 
