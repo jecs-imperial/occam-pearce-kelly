@@ -138,7 +138,7 @@ class DirectedAcyclicGraph {
     }.bind(this));
   }
   
-  fromNothing() {
+  static fromNothing() {
     const vertexMap = {},
           directedAcyclicGraph = new DirectedAcyclicGraph(vertexMap);
 
