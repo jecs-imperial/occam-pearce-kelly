@@ -43,7 +43,9 @@ Now edges and vertices can be added to the directed acyclic graph incrementally:
             
     directedAcyclicGraph.addVertexByName(vertexName);
     
-    const cyclicVertexNames = directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
+    const cyclicVertexNames = 
+    
+     directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
         
 There is no need to added vertices explicitly, as the example above shows. The return value of the `addEdgeByVertexNames()` will be `null` if the edge does not break the topological ordering. If it does, the cycle that breaks the ordering will be returned in the form of an array of vertex names. 
 
