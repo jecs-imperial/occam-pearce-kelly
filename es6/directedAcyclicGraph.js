@@ -195,6 +195,14 @@ class DirectedAcyclicGraph {
 
     return directedAcyclicGraph;
   }
+  
+  static fromVertexNames(vertexNames) {
+    const vertexMap = vertexMapFromVertexNames(vertexNames);
+
+    const directedAcyclicGraph = new DirectedAcyclicGraph(vertexMap);
+
+    return directedAcyclicGraph;
+  }
 
   static fromTopologicallyOrderedVertices(topologicallyOrderedVertices) {
     const vertexMap = vertexMapFromTopologicallyOrderedVertices(topologicallyOrderedVertices);
@@ -224,14 +232,28 @@ class DirectedAcyclicGraph {
 
 module.exports = DirectedAcyclicGraph;
 
+function vertexMapFromVertexNames(vertexNames) {
+  const vertexMap = {};
+  
+  vertexNames.forEach(function(vertexName, index) {
+    const name = vertexName,  ///
+          vertex = Vertex.fromNameAndIndex(name, index);
+
+    vertexMap[vertexName] = vertex;
+  });
+  
+  return vertexMap;
+}
+
 function vertexMapFromTopologicallyOrderedVertices(topologicallyOrderedVertices) {
   const vertexMap = {};
   
   topologicallyOrderedVertices.forEach(function(topologicallyOrderedVertex, index) {
     const name = topologicallyOrderedVertex.getName(),
-          vertex = Vertex.fromNameAndIndex(name, index);
+          vertex = Vertex.fromNameAndIndex(name, index),
+          vertexName = name;  ///
 
-    vertexMap[name] = vertex;
+    vertexMap[vertexName] = vertex;
   });
 
   return vertexMap;

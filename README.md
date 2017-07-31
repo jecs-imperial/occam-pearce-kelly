@@ -27,9 +27,9 @@ This algorithm maintains a topological ordering of a directed acyclic graph. It 
     
     directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
 
-Note that there is no need to added vertices explicitly, they will be added whenever necessary when edges that reference them are added. 
+Note that there is no need to added vertices explicitly, they will be added whenever necessary when edges that reference them are added. You can also use the `fromVertexNames()` factory method. Again, since no edges are added, the graph is trivially acyclic. 
 
-A better way to create a directed acyclic graph is to a create graph and topologically order its vertices using the [Kahn](https://github.com/occam-proof-assistant/Kahn) algorithm. These topologically ordered vertices, complete with edge information, can then be used as the input for a directed acyclic graph:
+A better way to create a directed acyclic graph is to a create graph and topologically order its vertices by way of the [Kahn](https://github.com/occam-proof-assistant/Kahn) algorithm. These topologically ordered vertices, complete with edge information, can then be used as the input for a directed acyclic graph:
     
     const kahn = require('occam-kahn');
 
