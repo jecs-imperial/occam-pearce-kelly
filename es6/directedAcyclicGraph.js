@@ -46,24 +46,6 @@ class DirectedAcyclicGraph {
     return vertex;
   }
 
-  addVertexByVertexName(vertexName) {
-    const vertexPresent = this.isVertexPresentByVertexName(vertexName);
-
-    if (!vertexPresent) {
-      const vertexNames = Object.keys(this.vertexMap),
-            vertexNamesLength = vertexNames.length,
-            name = vertexName,  ///
-            index = vertexNamesLength, ///
-            vertex = Vertex.fromNameAndIndex(name, index);
-
-      this.vertexMap[vertexName] = vertex;
-    }
-
-    const vertex = this.vertexMap[vertexName];
-
-    return vertex;
-  }
-
   addEdgeByVertexNames(sourceVertexName, targetVertexName) {
     let cyclicVertices = null;
 
@@ -113,8 +95,6 @@ class DirectedAcyclicGraph {
   }
 
   removeEdgeByVertexNames(sourceVertexName, targetVertexName) {
-    let success = false;
-
     const edgePresent = this.isEdgePresentByVertexNames(sourceVertexName, targetVertexName);
     
     if (edgePresent) {
@@ -123,13 +103,49 @@ class DirectedAcyclicGraph {
 
       sourceVertex.removeImmediateSuccessorVertex(targetVertex);
       targetVertex.removeImmediatePredecessorVertex(sourceVertex);
-      
-      success = true;      
+    }
+  }
+
+  addVertexByVertexName(vertexName) {
+    const vertexPresent = this.isVertexPresentByVertexName(vertexName);
+
+    if (!vertexPresent) {
+      const vertexNames = Object.keys(this.vertexMap),
+            vertexNamesLength = vertexNames.length,
+            name = vertexName,  ///
+            index = vertexNamesLength, ///
+            vertex = Vertex.fromNameAndIndex(name, index);
+
+      this.vertexMap[vertexName] = vertex;
     }
 
-    return success;
+    const vertex = this.vertexMap[vertexName];
+
+    return vertex;
   }
-  
+
+  removeVertexByVertexName(vertexName) {
+    const vertexPresent = this.isVertexPresentByVertexName(vertexName);
+
+    if (vertexPresent) {
+      const vertex = this.retrieveVertexByVertexName(vertexName);
+
+      vertex.forEachImmediateSuccessorVertex(function(immediateSuccessVertex) {
+        const immediatePredecessorVertex = vertex;  ///
+
+        immediateSuccessVertex.removeImmediatePredecessorVertex(immediatePredecessorVertex);
+      });
+
+      vertex.forEachImmediatePredecessorVertex(function(immediatePredecessorVertex) {
+        const immediateSuccessVertex = vertex;  ///
+
+        immediatePredecessorVertex.removeImmediateSuccessorVertex(immediateSuccessVertex);
+      });
+
+      delete this.vertexMap[vertexName];
+    }
+  }
+
   addEdge(edge) {
     const sourceVertexName = edge.getSourceVertexName(),
           targetVertexName = edge.getTargetVertexName(),
