@@ -13,6 +13,23 @@ class DirectedAcyclicGraph {
 
     return vertexPresent;
   }
+  
+  isEdgePresentByVertexNames(sourceVertexName, targetVertexName) {
+    let edgePresent = false;
+
+    const sourceVertex = this.retrieveVertexByVertexName(sourceVertexName),
+          targetVertex = this.retrieveVertexByVertexName(targetVertexName),
+          sourceVertexAndTargetVertexPresent = (sourceVertex !== null) && (targetVertex !== null);
+
+    if (sourceVertexAndTargetVertexPresent) {
+      const targetVertexSourceVertexImmediateSuccessorVertex = sourceVertex.isVertexImmediateSuccessorVertex(targetVertex),
+            sourceVertexTargetVertexImmediatePredecessorVertex = targetVertex.isVertexImmediatePredecessorVertex(sourceVertex);
+
+      edgePresent = (targetVertexSourceVertexImmediateSuccessorVertex && sourceVertexTargetVertexImmediatePredecessorVertex);
+    }
+
+    return edgePresent;
+  }
 
   retrieveVertexByVertexName(vertexName) {
     const vertexPresent = this.isVertexPresent(vertexName),
@@ -87,6 +104,24 @@ class DirectedAcyclicGraph {
     }
 
     return cyclicVertexNames;
+  }
+
+  removeEdgeByVertexNames(sourceVertexName, targetVertexName) {
+    let success = false;
+
+    const edgePresent = this.isEdgePresentByVertexNames(sourceVertexName, targetVertexName);
+    
+    if (edgePresent) {
+      const sourceVertex = this.retrieveVertexByVertexName(sourceVertexName),
+            targetVertex = this.retrieveVertexByVertexName(targetVertexName);
+
+      sourceVertex.removeImmediateSuccessorVertex(targetVertex);
+      targetVertex.removeImmediatePredecessorVertex(sourceVertex);
+      
+      success = true;      
+    }
+
+    return success;
   }
   
   addEdge(edge) {

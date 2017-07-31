@@ -88,17 +88,29 @@ class Vertex {
 
     return backwardsAffectedVertices;
   }
+  
+  isVertexImmediatePredecessorVertex(vertex) {
+    const vertexImmediatePredecessorVertex = this.immediatePredecessorVertices.includes(vertex);
+
+    return vertexImmediatePredecessorVertex;
+  }
+
+  isVertexImmediateSuccessorVertex(vertex) {
+    const vertexImmediateSuccessorVertex = this.immediateSuccessorVertices.includes(vertex);
+
+    return vertexImmediateSuccessorVertex;
+  }
 
   isEdgePresentBySourceVertex(sourceVertex) {
-    const index = this.immediatePredecessorVertices.indexOf(sourceVertex),
-          edgePresent = (index !== -1); ///
+    const sourceVertexImmediatePredecessorVertex = this.isVertexImmediatePredecessorVertex(sourceVertex),
+          edgePresent = sourceVertexImmediatePredecessorVertex; ///
 
     return edgePresent;
   }
 
   isEdgePresentByTargetVertex(targetVertex) {
-    const index = this.immediateSuccessorVertices.indexOf(targetVertex),
-          edgePresent = (index !== -1); ///
+    const targetVertexImmediateSuccessorVertex = this.isVertexImmediateSuccessorVertex(targetVertex),
+          edgePresent = targetVertexImmediateSuccessorVertex; ///
 
     return edgePresent;
   }
@@ -113,6 +125,22 @@ class Vertex {
 
   setVisited(visited) {
     this.visited = visited;
+  }
+
+  removeImmediatePredecessorVertex(immediatePredecessorVertex) {
+    const index = this.immediatePredecessorVertices.indexOf(immediatePredecessorVertex),
+          start = index,  ///
+          deleteCount = 1;
+
+    this.immediatePredecessorVertices.splice(start, deleteCount);
+  }
+
+  removeImmediateSuccessorVertex(immediateSuccessorVertex) {
+    const index = this.immediateSuccessorVertices.indexOf(immediateSuccessorVertex),
+          start = index,  ///
+          deleteCount = 1;
+
+    this.immediateSuccessorVertices.splice(start, deleteCount);
   }
 
   resetVisited() {
