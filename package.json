@@ -1,7 +1,7 @@
 {
   "name": "occam-pearce-kelly",
   "author": "James Smith",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "license": "MIT",
   "homepage": "https://github.com/occam-proof-assistant/Pearce-Kelly",
   "description": "An implementation of the Pearce-Kelly algoirthm.",

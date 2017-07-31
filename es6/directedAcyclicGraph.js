@@ -96,7 +96,7 @@ class DirectedAcyclicGraph {
     let cyclicVertexNames = null;
 
     if (cyclicVertices !== null) {
-      cyclicVertexNames = cyclicVertices.forEach(function(cyclicVertex) {
+      cyclicVertexNames = cyclicVertices.map(function(cyclicVertex) {
         const cyclicVertexName = cyclicVertex.getName();
 
         return cyclicVertexName;
