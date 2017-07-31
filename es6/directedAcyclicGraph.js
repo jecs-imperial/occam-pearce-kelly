@@ -8,6 +8,12 @@ class DirectedAcyclicGraph {
     this.vertexMap = vertexMap;
   }
 
+  getVertexNames() {
+    const vertexNames = Object.keys(this.vertexMap);
+
+    return vertexNames;
+  }
+
   isVertexPresentByVertexName(vertexName) {
     const vertexPresent = this.vertexMap.hasOwnProperty(vertexName);
 
