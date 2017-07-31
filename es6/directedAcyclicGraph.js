@@ -8,7 +8,7 @@ class DirectedAcyclicGraph {
     this.vertexMap = vertexMap;
   }
 
-  isVertexPresent(vertexName) {
+  isVertexPresentByVertexName(vertexName) {
     const vertexPresent = this.vertexMap.hasOwnProperty(vertexName);
 
     return vertexPresent;
@@ -32,7 +32,7 @@ class DirectedAcyclicGraph {
   }
 
   retrieveVertexByVertexName(vertexName) {
-    const vertexPresent = this.isVertexPresent(vertexName),
+    const vertexPresent = this.isVertexPresentByVertexName(vertexName),
           vertex = vertexPresent ?
                     this.vertexMap[vertexName] :
                       null;
@@ -41,7 +41,7 @@ class DirectedAcyclicGraph {
   }
 
   addVertexByVertexName(vertexName) {
-    const vertexPresent = this.isVertexPresent(vertexName);
+    const vertexPresent = this.isVertexPresentByVertexName(vertexName);
 
     if (!vertexPresent) {
       const vertexNames = Object.keys(this.vertexMap),
