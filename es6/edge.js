@@ -13,6 +13,12 @@ class Edge {
   getTargetVertexName() {
     return this.targetVertexName;
   }
+  
+  isEqualTo(sourceVertexName, targetVertexName) {
+    const equalTo = ((this.sourceVertexName === sourceVertexName) && (this.targetVertexName === targetVertexName));
+    
+    return equalTo;
+  }
 }
 
 module.exports = Edge;
