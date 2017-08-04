@@ -65,10 +65,9 @@ class DirectedAcyclicGraph {
   
   removeEdge(edge) {
     const sourceVertexName = edge.getSourceVertexName(),
-          targetVertexName = edge.getTargetVertexName(),
-          removedEdges = this.removeEdgeByVertexNames(sourceVertexName, targetVertexName);
-    
-    return removedEdges;
+          targetVertexName = edge.getTargetVertexName();
+
+    this.removeEdgeByVertexNames(sourceVertexName, targetVertexName);
   }
 
   addVertexByVertexName(vertexName) {
