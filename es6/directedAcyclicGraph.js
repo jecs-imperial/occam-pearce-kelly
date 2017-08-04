@@ -100,9 +100,11 @@ class DirectedAcyclicGraph {
 
       vertex.forEachImmediateSuccessorVertex(function(immediateSuccessVertex) {
         const immediatePredecessorVertex = vertex,  ///
-              removedEdgeSourceVertex = immediatePredecessorVertex, ///
-              removedEdgeTargetVertex = immediateSuccessVertex, /// 
-              removedEdge = new Edge(removedEdgeSourceVertex, removedEdgeTargetVertex);
+              immediatePredecessorVertexName = immediatePredecessorVertex.getName(),
+              immediateSuccessVertexName = immediateSuccessVertex.getName(),
+              removedEdgeSourceVertexName = immediatePredecessorVertexName, ///
+              removedEdgeTargetVertexName = immediateSuccessVertexName, /// 
+              removedEdge = new Edge(removedEdgeSourceVertexName, removedEdgeTargetVertexName);
 
         removedEdges.push(removedEdge);
 
@@ -111,9 +113,11 @@ class DirectedAcyclicGraph {
 
       vertex.forEachImmediatePredecessorVertex(function(immediatePredecessorVertex) {
         const immediateSuccessVertex = vertex,  ///
-              removedEdgeSourceVertex = immediatePredecessorVertex, ///
-              removedEdgeTargetVertex = immediateSuccessVertex, /// 
-              removedEdge = new Edge(removedEdgeSourceVertex, removedEdgeTargetVertex);
+              immediatePredecessorVertexName = immediatePredecessorVertex.getName(),
+              immediateSuccessVertexName = immediateSuccessVertex.getName(),  ///
+              removedEdgeSourceVertexName = immediatePredecessorVertexName, ///
+              removedEdgeTargetVertexName = immediateSuccessVertexName, /// 
+              removedEdge = new Edge(removedEdgeSourceVertexName, removedEdgeTargetVertexName);
 
         removedEdges.push(removedEdge);
 
