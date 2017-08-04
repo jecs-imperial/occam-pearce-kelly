@@ -317,10 +317,8 @@ function vertexMapFromTopologicallyOrderedVertices(topologicallyOrderedVertices)
 function addEdgesToVertices(topologicallyOrderedVertices, vertexMap) {
   topologicallyOrderedVertices.forEach(function(topologicallyOrderedVertex) {
     topologicallyOrderedVertex.forEachOutgoingEdge(function(outgoingEdge) {
-      const sourceVertex = outgoingEdge.getSourceVertex(),
-            targetVertex = outgoingEdge.getTargetVertex(),
-            sourceVertexName = sourceVertex.getName(),
-            targetVertexName = targetVertex.getName(),
+      const sourceVertexName = outgoingEdge.getSourceVertexName(),
+            targetVertexName = outgoingEdge.getTargetVertexName(),
             immediatePredecessorVertexName = sourceVertexName,  ///
             immediateSuccessorVertexName = targetVertexName,
             immediatePredecessorVertex = vertexMap[immediatePredecessorVertexName], ///
