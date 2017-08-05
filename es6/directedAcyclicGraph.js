@@ -1,8 +1,11 @@
 'use strict';
 
+const necessary = require('necessary');
+
 const Edge = require('./edge'),
-      Vertex = require('./vertex'),
-      arrayUtil = require('./util/array');
+      Vertex = require('./vertex');
+
+const { array } = necessary;
 
 class DirectedAcyclicGraph {
   constructor(vertexMap) {
@@ -194,7 +197,7 @@ class DirectedAcyclicGraph {
     let cyclicVertices = null;
 
     const forwardsAffectedVertices = targetVertex.getForwardsAffectedVertices(sourceVertex),
-          lastForwardsAffectedVertex = arrayUtil.last(forwardsAffectedVertices),
+          lastForwardsAffectedVertex = array.last(forwardsAffectedVertices),
           cyclePresent = (lastForwardsAffectedVertex === sourceVertex);
     
     if (cyclePresent) {

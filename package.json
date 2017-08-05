@@ -1,7 +1,7 @@
 {
   "name": "occam-pearce-kelly",
   "author": "James Smith",
-  "version": "2.4.7",
+  "version": "2.4.8",
   "license": "MIT",
   "homepage": "https://github.com/occam-proof-assistant/Pearce-Kelly",
   "description": "An implementation of the Pearce-Kelly algoirthm.",
@@ -17,6 +17,7 @@
     "chai": "~2.2.0",
     "chokidar-cli": "^1.2.0",
     "mocha": "~2.2.5",
+    "necessary": "^1.0.9",
     "occam-kahn": "^2.0.29"
   },
   "scripts": {
