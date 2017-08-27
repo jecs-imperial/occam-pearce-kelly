@@ -33,16 +33,36 @@ class DirectedAcyclicGraph {
     return vertexPresent;
   }
 
+  removeEdgesBySourceVertexName(sourceVertexName) {
+    const sourceVertexPresent = this.isVertexPresentByVertexName(sourceVertexName);
+    
+    if (sourceVertexPresent) {
+      const sourceVertex = this.retrieveVertexByVertexName(sourceVertexName);
+
+      sourceVertex.removeOutgoingEdges();         
+    }
+  }
+
+  removeEdgesByTargetVertexName(targetVertexName) {
+    const targetVertexPresent = this.isVertexPresentByVertexName(targetVertexName);
+
+    if (targetVertexPresent) {
+      const targetVertex = this.retrieveVertexByVertexName(targetVertexName);
+
+      targetVertex.removeIncomingEdges();
+    }
+  }
+
   isEdgePresentByVertexNames(sourceVertexName, targetVertexName) {
     let edgePresent = false;
 
     const sourceVertex = this.retrieveVertexByVertexName(sourceVertexName),
-        targetVertex = this.retrieveVertexByVertexName(targetVertexName),
-        sourceVertexAndTargetVertexPresent = (sourceVertex !== null) && (targetVertex !== null);
+          targetVertex = this.retrieveVertexByVertexName(targetVertexName),
+          sourceVertexAndTargetVertexPresent = (sourceVertex !== null) && (targetVertex !== null);
 
     if (sourceVertexAndTargetVertexPresent) {
       const targetVertexSourceVertexImmediateSuccessorVertex = sourceVertex.isVertexImmediateSuccessorVertex(targetVertex),
-          sourceVertexTargetVertexImmediatePredecessorVertex = targetVertex.isVertexImmediatePredecessorVertex(sourceVertex);
+            sourceVertexTargetVertexImmediatePredecessorVertex = targetVertex.isVertexImmediatePredecessorVertex(sourceVertex);
 
       edgePresent = (targetVertexSourceVertexImmediateSuccessorVertex && sourceVertexTargetVertexImmediatePredecessorVertex);
     }

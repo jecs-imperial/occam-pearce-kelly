@@ -142,6 +142,26 @@ class Vertex {
 
     this.immediateSuccessorVertices.splice(start, deleteCount);
   }
+  
+  removeIncomingEdges() {
+    const immediateSuccessorVertex = this; ///
+    
+    this.immediatePredecessorVertices.forEach(function(immediatePredecessorVertex) {
+      immediatePredecessorVertex.removeImmediateSuccessorVertex(immediateSuccessorVertex);
+    });
+
+    this.immediatePredecessorVertices = [];
+  }
+
+  removeOutgoingEdges() {
+    const immediatePredecessorVertex = this; ///
+
+    this.immediateSuccessorVertices.forEach(function(immediateSuccessorVertex) {
+      immediateSuccessorVertex.removeImmediateSuccessorVertex(immediatePredecessorVertex);
+    });
+
+    this.immediateSuccessorVertices = [];
+  }
 
   resetVisited() {
     this.visited = false;
