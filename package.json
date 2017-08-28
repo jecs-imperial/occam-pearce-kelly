@@ -1,7 +1,7 @@
 {
   "name": "occam-pearce-kelly",
   "author": "James Smith",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "license": "MIT",
   "homepage": "https://github.com/occam-proof-assistant/Pearce-Kelly",
   "description": "An implementation of the Pearce-Kelly algoirthm.",
@@ -9,7 +9,9 @@
     "type": "git",
     "url": "https://github.com/occam-proof-assistant/Pearce-Kelly"
   },
-  "dependencies": {},
+  "dependencies": {
+    "necessary": "^1.4.2"
+  },
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.7.5",
