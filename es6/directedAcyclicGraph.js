@@ -27,9 +27,14 @@ class DirectedAcyclicGraph {
 
   getTopologicallyOrderedVertexNames() {
     const vertices = this.getVertices(),
-          topologicallyOrderedVertices = DirectedAcyclicGraph.topologicallyOrderVertices(vertices);
+          topologicallyOrderedVertices = DirectedAcyclicGraph.topologicallyOrderVertices(vertices),
+          topologicallyOrderedVertexNames = topologicallyOrderedVertices.forEach(function(topologicallyOrderedVertex) {
+            const topologicallyOrderedVertexName = topologicallyOrderedVertex.getName();
 
-    return topologicallyOrderedVertices;
+            return topologicallyOrderedVertexName;
+          });
+
+    return topologicallyOrderedVertexNames;
   }
 
   isEdgePresent(edge) {
@@ -262,28 +267,6 @@ class DirectedAcyclicGraph {
     return cyclicVertices;
   }
 
-  mapVertex(callback) {
-    const vertexNames = Object.keys(this.vertexMap),
-          result = vertexNames.map(function(vertexName) {
-            const vertex = this.vertexMap[vertexName],
-                  result = callback(vertex);
-            
-            return result;
-          }.bind(this));
-    
-    return result;
-  }
-
-  forEachVertex(callback) {
-    const vertexNames = Object.keys(this.vertexMap);
-
-    vertexNames.forEach(function(vertexName) {
-      const vertex = this.vertexMap[vertexName];
-
-      callback(vertex);
-    }.bind(this));
-  }
-  
   static fromNothing() {
     const vertexMap = {},
           directedAcyclicGraph = new DirectedAcyclicGraph(vertexMap);
