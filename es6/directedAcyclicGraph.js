@@ -19,6 +19,10 @@ class DirectedAcyclicGraph {
     return vertexNames;
   }
 
+  getTopologicallyOrderedVertexNames() {
+
+  }
+
   isEdgePresent(edge) {
     const sourceVertexName = edge.getSourceVertexName(),
           targetVertexName = edge.getTargetVertexName(),
@@ -226,9 +230,9 @@ class DirectedAcyclicGraph {
     } else {
       const backwardsAffectedVertices = sourceVertex.getBackwardsAffectedVertices();
 
-      DirectedAcyclicGraph.sortVertices(backwardsAffectedVertices);
+      DirectedAcyclicGraph.orderVertices(backwardsAffectedVertices);
 
-      DirectedAcyclicGraph.sortVertices(forwardsAffectedVertices);
+      DirectedAcyclicGraph.orderVertices(forwardsAffectedVertices);
 
       const affectedVertices = [].concat(backwardsAffectedVertices).concat(forwardsAffectedVertices),
             affectedVertexIndices = affectedVertices.map(function(affectedVertex) {
@@ -296,7 +300,7 @@ class DirectedAcyclicGraph {
     return directedAcyclicGraph;
   }
 
-  static sortVertices(vertices) {
+  static orderVertices(vertices) {  ///
     vertices.sort(function(firstVertex, secondVertex) {
       const firstVertexIndex = firstVertex.getIndex(),
             secondVertexIndex = secondVertex.getIndex();

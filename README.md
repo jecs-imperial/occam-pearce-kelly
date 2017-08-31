@@ -12,7 +12,7 @@ An implementation of the Pearce-Kelly algorithm.
 
 ## Introduction
 
-This algorithm maintains a topological ordering of a directed acyclic graph. It does this by rearranging the topological ordering whenever an edge is added, if possible, or reporting the cycle that breaks the topological ordering if not. An empty directed acyclic graph can be created with the `fromNothing()` factory method which is trivially acyclic and then edges and vertices can be added to it incrementally: 
+This algorithm maintains a topological ordering of a directed acyclic graph. It does this by re-ordering whenever an edge is added, if possible, or reporting the cycle that breaks the ordering if not. An empty and therefore trivially acyclic directed graph can be created with the `fromNothing()` factory method. Then edges and vertices can be added to it incrementally: 
 
     const pearckelly = require('occam-pearce-kelly');
 
@@ -27,7 +27,7 @@ This algorithm maintains a topological ordering of a directed acyclic graph. It 
     
     directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
 
-Note that there is no need to added vertices explicitly, they will be added whenever necessary when edges that reference them are added. You can also use the `fromVertexNames()` factory method. Again, since no edges are added, the graph is trivially acyclic. 
+Note that there is no need to added vertices explicitly, they will be added whenever necessary when edges that reference them are added.  You can also use the `fromVertexNames()` factory method. Since no edges are added, the graph is again trivially acyclic. 
 
 A better way to create a directed acyclic graph is to a create graph and topologically order its vertices by way of the [Kahn](https://github.com/occam-proof-assistant/Kahn) algorithm. These topologically ordered vertices, complete with edge information, can then be used as the input for a directed acyclic graph:
     
@@ -56,21 +56,13 @@ From this point on, edges and vertices can again be added incrementally:
     
      directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
         
-The return value of the `addEdgeByVertexNames()` will be `null` if the edge does not break the topological ordering. If it does, the cycle that breaks the ordering will be returned in the form of an array of vertex names. 
+The return value of the `addEdgeByVertexNames()` will be `null` if the edge does not break the topological ordering. If it does, the cycle that breaks the ordering will be returned in the form of an array of vertex names.
 
-At any point the `mapVertex()` and `forEachVertex()` methods can be invoked to make use of the graph vertices. There are also methods on the vertices that can be used to recover pertinent information about them. For example, in what follows the topologically ordered predecessors of each vertex are recovered:
+To make use of the topological ordering, call the `getTopologicallyOrderedVertexNames()` method:
 
-    directedAcyclicGraph.forEachVertex(function(vertex) {
-      const vertexName = vertex.getName(),
-            predecessorVertices = vertex.getPredecessorVertices();
+    const topologicallyOrderedVertexNames = 
     
-      DirectedAcyclicGraph.orderVertices(predecessorVertices);
-      
-      ...
-    
-    });
-    
-Note that the predecessor vertices are effectively already sorted in that each carries a unique index that is indicative of the underlying topological ordering. All the static `sortVertices()` method of the `DirectedAcyclicGraph` class itself does is to sort the array that is returned according to this ordering.  
+     directedAcyclicGraph.getTopologicallyOrderedVertexNames();
 
 ## Installation
 
