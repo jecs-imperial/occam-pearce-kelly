@@ -20,7 +20,7 @@ class DirectedAcyclicGraph {
   }
 
   getVertices() {
-    const vertices =Object.values(this.vertexMap);
+    const vertices = Object.values(this.vertexMap);
 
     return vertices;
   }
