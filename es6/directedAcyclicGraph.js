@@ -19,8 +19,17 @@ class DirectedAcyclicGraph {
     return vertexNames;
   }
 
-  getTopologicallyOrderedVertexNames() {
+  getVertices() {
+    const vertices =Object.values(this.vertexMap);
 
+    return vertices;
+  }
+
+  getTopologicallyOrderedVertexNames() {
+    const vertices = this.getVertices(),
+          topologicallyOrderedVertices = DirectedAcyclicGraph.topologicallyOrderVertices(vertices);
+
+    return topologicallyOrderedVertices;
   }
 
   isEdgePresent(edge) {
@@ -230,9 +239,9 @@ class DirectedAcyclicGraph {
     } else {
       const backwardsAffectedVertices = sourceVertex.getBackwardsAffectedVertices();
 
-      DirectedAcyclicGraph.orderVertices(backwardsAffectedVertices);
+      DirectedAcyclicGraph.topologicallyOrderVertices(backwardsAffectedVertices);
 
-      DirectedAcyclicGraph.orderVertices(forwardsAffectedVertices);
+      DirectedAcyclicGraph.topologicallyOrderVertices(forwardsAffectedVertices);
 
       const affectedVertices = [].concat(backwardsAffectedVertices).concat(forwardsAffectedVertices),
             affectedVertexIndices = affectedVertices.map(function(affectedVertex) {
@@ -300,7 +309,9 @@ class DirectedAcyclicGraph {
     return directedAcyclicGraph;
   }
 
-  static orderVertices(vertices) {  ///
+  static topologicallyOrderVertices(vertices) {  ///
+    vertices = vertices.slice();  ///
+
     vertices.sort(function(firstVertex, secondVertex) {
       const firstVertexIndex = firstVertex.getIndex(),
             secondVertexIndex = secondVertex.getIndex();
@@ -313,6 +324,10 @@ class DirectedAcyclicGraph {
         return +1;
       }
     });
+
+    const topologicallyOrderedVertices = vertices;  ///
+
+    return topologicallyOrderedVertices;
   }
 }
 
