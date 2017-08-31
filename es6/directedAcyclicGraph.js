@@ -28,7 +28,7 @@ class DirectedAcyclicGraph {
   getTopologicallyOrderedVertexNames() {
     const vertices = this.getVertices(),
           topologicallyOrderedVertices = DirectedAcyclicGraph.topologicallyOrderVertices(vertices),
-          topologicallyOrderedVertexNames = topologicallyOrderedVertices.forEach(function(topologicallyOrderedVertex) {
+          topologicallyOrderedVertexNames = topologicallyOrderedVertices.map(function(topologicallyOrderedVertex) {
             const topologicallyOrderedVertexName = topologicallyOrderedVertex.getName();
 
             return topologicallyOrderedVertexName;
