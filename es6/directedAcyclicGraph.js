@@ -3,10 +3,12 @@
 const necessary = require('necessary');
 
 const Edge = require('./edge'),
-      Vertex = require('./vertex');
+      Vertex = require('./vertex'),
+      vertexUtilities = require('./utilities/vertex');
 
 const { array } = necessary,
-      { last} = array;
+      { last} = array,
+      { vertexNamesFromVertices, topologicallyOrderVertices } = vertexUtilities;
 
 class DirectedAcyclicGraph {
   constructor(vertexMap) {
@@ -26,14 +28,13 @@ class DirectedAcyclicGraph {
   }
 
   getTopologicallyOrderedVertexNames() {
-    const vertices = this.getVertices(),
-          topologicallyOrderedVertices = topologicallyOrderVertices(vertices),
-          topologicallyOrderedVertexNames = topologicallyOrderedVertices.map(function(topologicallyOrderedVertex) {
-            const topologicallyOrderedVertexName = topologicallyOrderedVertex.getName();
+    const vertices = this.getVertices();
 
-            return topologicallyOrderedVertexName;
-          });
-
+    topologicallyOrderVertices(vertices);
+    
+    const topologicallyOrderedVertices = vertices, ///
+          topologicallyOrderedVertexNames = vertexNamesFromVertices(topologicallyOrderedVertices);
+    
     return topologicallyOrderedVertexNames;
   }
 
@@ -155,16 +156,10 @@ class DirectedAcyclicGraph {
         }
       }
     }
-
-    let cyclicVertexNames = null;
-
-    if (cyclicVertices !== null) {
-      cyclicVertexNames = cyclicVertices.map(function(cyclicVertex) {
-        const cyclicVertexName = cyclicVertex.getName();
-
-        return cyclicVertexName;
-      });
-    }
+    
+    const cyclicVertexNames = (cyclicVertices !== null) ?
+                                vertexNamesFromVertices(cyclicVertices) :
+                                  null;
 
     return cyclicVertexNames;
   }
@@ -181,11 +176,11 @@ class DirectedAcyclicGraph {
 
       vertex.forEachImmediateSuccessorVertex(function(immediateSuccessVertex) {
         const immediatePredecessorVertex = vertex,  ///
-            immediatePredecessorVertexName = immediatePredecessorVertex.getName(),
-            immediateSuccessVertexName = immediateSuccessVertex.getName(),
-            removedEdgeSourceVertexName = immediatePredecessorVertexName, ///
-            removedEdgeTargetVertexName = immediateSuccessVertexName, ///
-            removedEdge = new Edge(removedEdgeSourceVertexName, removedEdgeTargetVertexName);
+              immediatePredecessorVertexName = immediatePredecessorVertex.getName(),
+              immediateSuccessVertexName = immediateSuccessVertex.getName(),
+              removedEdgeSourceVertexName = immediatePredecessorVertexName, ///
+              removedEdgeTargetVertexName = immediateSuccessVertexName, ///
+              removedEdge = new Edge(removedEdgeSourceVertexName, removedEdgeTargetVertexName);
 
         removedEdges.push(removedEdge);
 
@@ -194,11 +189,11 @@ class DirectedAcyclicGraph {
 
       vertex.forEachImmediatePredecessorVertex(function(immediatePredecessorVertex) {
         const immediateSuccessVertex = vertex,  ///
-            immediatePredecessorVertexName = immediatePredecessorVertex.getName(),
-            immediateSuccessVertexName = immediateSuccessVertex.getName(),  ///
-            removedEdgeSourceVertexName = immediatePredecessorVertexName, ///
-            removedEdgeTargetVertexName = immediateSuccessVertexName, ///
-            removedEdge = new Edge(removedEdgeSourceVertexName, removedEdgeTargetVertexName);
+              immediatePredecessorVertexName = immediatePredecessorVertex.getName(),
+              immediateSuccessVertexName = immediateSuccessVertex.getName(),  ///
+              removedEdgeSourceVertexName = immediatePredecessorVertexName, ///
+              removedEdgeTargetVertexName = immediateSuccessVertexName, ///
+              removedEdge = new Edge(removedEdgeSourceVertexName, removedEdgeTargetVertexName);
 
         removedEdges.push(removedEdge);
 
@@ -355,25 +350,4 @@ function addEdgesToVertices(topologicallyOrderedVertices, vertexMap) {
       immediateSuccessorVertex.addImmediatePredecessorVertex(immediatePredecessorVertex);
     });
   });
-}
-
-function topologicallyOrderVertices(vertices) {  ///
-  vertices = vertices.slice();  ///
-
-  vertices.sort(function(firstVertex, secondVertex) {
-    const firstVertexIndex = firstVertex.getIndex(),
-          secondVertexIndex = secondVertex.getIndex();
-
-    if (false) {
-
-    } else  if (firstVertexIndex < secondVertexIndex) {
-      return -1;
-    } else  if (firstVertexIndex > secondVertexIndex) {
-      return +1;
-    }
-  });
-
-  const topologicallyOrderedVertices = vertices;  ///
-
-  return topologicallyOrderedVertices;
 }

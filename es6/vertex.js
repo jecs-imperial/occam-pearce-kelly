@@ -1,5 +1,9 @@
 'use strict';
 
+const vertexUtilities = require('./utilities/vertex');
+
+const { vertexNamesFromVertices, topologicallyOrderVertices } = vertexUtilities;
+
 class Vertex {
   constructor(name, index, visited, immediatePredecessorVertices, immediateSuccessorVertices) {
     this.name = name;
@@ -52,6 +56,17 @@ class Vertex {
           });
 
     return predecessorVertices;
+  }
+
+  getTopologicallyOrderedPredecessorVertexNames() {
+    const predecessorVertices = this.getPredecessorVertices();
+
+    topologicallyOrderVertices(predecessorVertices);
+
+    const topologicallyOrderedPredecessorVertices = predecessorVertices,  ///
+          topologicallyOrderedPredecessorVertexNames = vertexNamesFromVertices(topologicallyOrderedPredecessorVertices);
+
+    return topologicallyOrderedPredecessorVertexNames;
   }
   
   getForwardsAffectedVertices(sourceVertex) {
