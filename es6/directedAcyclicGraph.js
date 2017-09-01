@@ -13,21 +13,21 @@ class DirectedAcyclicGraph {
     this.vertexMap = vertexMap;
   }
 
-  getVertexNames() {
-    const vertexNames = Object.keys(this.vertexMap);
-
-    return vertexNames;
-  }
-
   getVertices() {
     const vertices = Object.values(this.vertexMap);
 
     return vertices;
   }
 
+  getVertexNames() {
+    const vertexNames = Object.keys(this.vertexMap);
+
+    return vertexNames;
+  }
+
   getTopologicallyOrderedVertexNames() {
     const vertices = this.getVertices(),
-          topologicallyOrderedVertices = DirectedAcyclicGraph.topologicallyOrderVertices(vertices),
+          topologicallyOrderedVertices = topologicallyOrderVertices(vertices),
           topologicallyOrderedVertexNames = topologicallyOrderedVertices.map(function(topologicallyOrderedVertex) {
             const topologicallyOrderedVertexName = topologicallyOrderedVertex.getName();
 
@@ -37,6 +37,31 @@ class DirectedAcyclicGraph {
     return topologicallyOrderedVertexNames;
   }
 
+  getVertexByVertexName(vertexName) {
+    const vertexPresent = this.isVertexPresentByVertexName(vertexName),
+          vertex = vertexPresent ?
+                     this.vertexMap[vertexName] :
+                       null;
+
+    return vertex;
+  }
+
+  setVertexByVertexName(vertexName, vertex) {
+    this.vertexMap[vertexName] = vertex;
+  }
+
+  unsetVertexByVertexName(vertexName) {
+    delete this.vertexMap[vertexName];
+  }
+
+  isEmpty() {
+    const vertices = this.getVertices(),
+          verticesLength = vertices.length,
+          empty = (verticesLength === 0);
+
+    return empty;
+  }
+
   isEdgePresent(edge) {
     const sourceVertexName = edge.getSourceVertexName(),
           targetVertexName = edge.getTargetVertexName(),
@@ -44,43 +69,17 @@ class DirectedAcyclicGraph {
     
     return edgePresent;
   }
-  
-  isVertexPresentByVertexName(vertexName) {
-    const vertexPresent = this.vertexMap.hasOwnProperty(vertexName);
-
-    return vertexPresent;
-  }
-
-  removeEdgesBySourceVertexName(sourceVertexName) {
-    const sourceVertexPresent = this.isVertexPresentByVertexName(sourceVertexName);
-    
-    if (sourceVertexPresent) {
-      const sourceVertex = this.retrieveVertexByVertexName(sourceVertexName);
-
-      sourceVertex.removeOutgoingEdges();         
-    }
-  }
-
-  removeEdgesByTargetVertexName(targetVertexName) {
-    const targetVertexPresent = this.isVertexPresentByVertexName(targetVertexName);
-
-    if (targetVertexPresent) {
-      const targetVertex = this.retrieveVertexByVertexName(targetVertexName);
-
-      targetVertex.removeIncomingEdges();
-    }
-  }
 
   isEdgePresentByVertexNames(sourceVertexName, targetVertexName) {
     let edgePresent = false;
 
-    const sourceVertex = this.retrieveVertexByVertexName(sourceVertexName),
-          targetVertex = this.retrieveVertexByVertexName(targetVertexName),
-          sourceVertexAndTargetVertexPresent = (sourceVertex !== null) && (targetVertex !== null);
+    const sourceVertex = this.getVertexByVertexName(sourceVertexName),
+        targetVertex = this.getVertexByVertexName(targetVertexName),
+        sourceVertexAndTargetVertexPresent = (sourceVertex !== null) && (targetVertex !== null);
 
     if (sourceVertexAndTargetVertexPresent) {
       const targetVertexSourceVertexImmediateSuccessorVertex = sourceVertex.isVertexImmediateSuccessorVertex(targetVertex),
-            sourceVertexTargetVertexImmediatePredecessorVertex = targetVertex.isVertexImmediatePredecessorVertex(sourceVertex);
+          sourceVertexTargetVertexImmediatePredecessorVertex = targetVertex.isVertexImmediatePredecessorVertex(sourceVertex);
 
       edgePresent = (targetVertexSourceVertexImmediateSuccessorVertex && sourceVertexTargetVertexImmediatePredecessorVertex);
     }
@@ -88,11 +87,28 @@ class DirectedAcyclicGraph {
     return edgePresent;
   }
 
-  retrieveVertexByVertexName(vertexName) {
-    const vertexPresent = this.isVertexPresentByVertexName(vertexName),
-          vertex = vertexPresent ?
-                    this.vertexMap[vertexName] :
-                      null;
+  isVertexPresentByVertexName(vertexName) {
+    const vertexNames = this.getVertexNames(),
+          vertexNamesIncludesVertexName = vertexNames.includes(vertexName),
+          vertexPresent = vertexNamesIncludesVertexName;  ///
+
+    return vertexPresent;
+  }
+
+  addVertexByVertexName(vertexName) {
+    const vertexPresent = this.isVertexPresentByVertexName(vertexName);
+
+    if (!vertexPresent) {
+      const vertexNames = this.getVertexNames(),
+          vertexNamesLength = vertexNames.length,
+          name = vertexName,  ///
+          index = vertexNamesLength, ///
+          vertex = Vertex.fromNameAndIndex(name, index);
+
+      this.setVertexByVertexName(vertexName, vertex);
+    }
+
+    const vertex = this.getVertexByVertexName(vertexName);
 
     return vertex;
   }
@@ -104,82 +120,15 @@ class DirectedAcyclicGraph {
 
     return cyclicVertexNames;
   }
-  
-  removeEdge(edge) {
-    const sourceVertexName = edge.getSourceVertexName(),
-          targetVertexName = edge.getTargetVertexName();
-
-    this.removeEdgeByVertexNames(sourceVertexName, targetVertexName);
-  }
-
-  addVertexByVertexName(vertexName) {
-    const vertexPresent = this.isVertexPresentByVertexName(vertexName);
-
-    if (!vertexPresent) {
-      const vertexNames = Object.keys(this.vertexMap),
-            vertexNamesLength = vertexNames.length,
-            name = vertexName,  ///
-            index = vertexNamesLength, ///
-            vertex = Vertex.fromNameAndIndex(name, index);
-
-      this.vertexMap[vertexName] = vertex;
-    }
-
-    const vertex = this.vertexMap[vertexName];
-
-    return vertex;
-  }
-
-  removeVertexByVertexName(vertexName) {
-    let removedEdges = null;
-    
-    const vertexPresent = this.isVertexPresentByVertexName(vertexName);
-
-    if (vertexPresent) {
-      removedEdges = [];
-      
-      const vertex = this.retrieveVertexByVertexName(vertexName);
-
-      vertex.forEachImmediateSuccessorVertex(function(immediateSuccessVertex) {
-        const immediatePredecessorVertex = vertex,  ///
-              immediatePredecessorVertexName = immediatePredecessorVertex.getName(),
-              immediateSuccessVertexName = immediateSuccessVertex.getName(),
-              removedEdgeSourceVertexName = immediatePredecessorVertexName, ///
-              removedEdgeTargetVertexName = immediateSuccessVertexName, /// 
-              removedEdge = new Edge(removedEdgeSourceVertexName, removedEdgeTargetVertexName);
-
-        removedEdges.push(removedEdge);
-
-        immediateSuccessVertex.removeImmediatePredecessorVertex(immediatePredecessorVertex);
-      });
-
-      vertex.forEachImmediatePredecessorVertex(function(immediatePredecessorVertex) {
-        const immediateSuccessVertex = vertex,  ///
-              immediatePredecessorVertexName = immediatePredecessorVertex.getName(),
-              immediateSuccessVertexName = immediateSuccessVertex.getName(),  ///
-              removedEdgeSourceVertexName = immediatePredecessorVertexName, ///
-              removedEdgeTargetVertexName = immediateSuccessVertexName, /// 
-              removedEdge = new Edge(removedEdgeSourceVertexName, removedEdgeTargetVertexName);
-
-        removedEdges.push(removedEdge);
-
-        immediatePredecessorVertex.removeImmediateSuccessorVertex(immediateSuccessVertex);
-      });
-
-      delete this.vertexMap[vertexName];
-    }
-    
-    return removedEdges;
-  }
 
   addEdgeByVertexNames(sourceVertexName, targetVertexName) {
     let cyclicVertices = null;
 
     if (sourceVertexName === targetVertexName) {
       const cyclicVertexName = sourceVertexName,  ///
-            cyclicVertex = this.vertexMap[cyclicVertexName];
+            cyclicVertex = this.getVertexByVertexName(cyclicVertexName);
 
-      cyclicVertices = [cyclicVertex];
+        cyclicVertices = [cyclicVertex];
     } else {
       const sourceVertex = this.addVertexByVertexName(sourceVertexName),
             targetVertex = this.addVertexByVertexName(targetVertexName),
@@ -220,15 +169,84 @@ class DirectedAcyclicGraph {
     return cyclicVertexNames;
   }
 
+  removeVertexByVertexName(vertexName) {
+    let removedEdges = null;
+
+    const vertexPresent = this.isVertexPresentByVertexName(vertexName);
+
+    if (vertexPresent) {
+      removedEdges = [];
+
+      const vertex = this.getVertexByVertexName(vertexName);
+
+      vertex.forEachImmediateSuccessorVertex(function(immediateSuccessVertex) {
+        const immediatePredecessorVertex = vertex,  ///
+            immediatePredecessorVertexName = immediatePredecessorVertex.getName(),
+            immediateSuccessVertexName = immediateSuccessVertex.getName(),
+            removedEdgeSourceVertexName = immediatePredecessorVertexName, ///
+            removedEdgeTargetVertexName = immediateSuccessVertexName, ///
+            removedEdge = new Edge(removedEdgeSourceVertexName, removedEdgeTargetVertexName);
+
+        removedEdges.push(removedEdge);
+
+        immediateSuccessVertex.removeImmediatePredecessorVertex(immediatePredecessorVertex);
+      });
+
+      vertex.forEachImmediatePredecessorVertex(function(immediatePredecessorVertex) {
+        const immediateSuccessVertex = vertex,  ///
+            immediatePredecessorVertexName = immediatePredecessorVertex.getName(),
+            immediateSuccessVertexName = immediateSuccessVertex.getName(),  ///
+            removedEdgeSourceVertexName = immediatePredecessorVertexName, ///
+            removedEdgeTargetVertexName = immediateSuccessVertexName, ///
+            removedEdge = new Edge(removedEdgeSourceVertexName, removedEdgeTargetVertexName);
+
+        removedEdges.push(removedEdge);
+
+        immediatePredecessorVertex.removeImmediateSuccessorVertex(immediateSuccessVertex);
+      });
+
+      this.unsetVertexByVertexName(vertexName);
+    }
+
+    return removedEdges;
+  }
+
+  removeEdge(edge) {
+    const sourceVertexName = edge.getSourceVertexName(),
+          targetVertexName = edge.getTargetVertexName();
+
+    this.removeEdgeByVertexNames(sourceVertexName, targetVertexName);
+  }
+
   removeEdgeByVertexNames(sourceVertexName, targetVertexName) {
     const edgePresent = this.isEdgePresentByVertexNames(sourceVertexName, targetVertexName);
 
     if (edgePresent) {
-      const sourceVertex = this.retrieveVertexByVertexName(sourceVertexName),
-            targetVertex = this.retrieveVertexByVertexName(targetVertexName);
+      const sourceVertex = this.getVertexByVertexName(sourceVertexName),
+            targetVertex = this.getVertexByVertexName(targetVertexName);
 
       sourceVertex.removeImmediateSuccessorVertex(targetVertex);
       targetVertex.removeImmediatePredecessorVertex(sourceVertex);
+    }
+  }
+
+  removeEdgesBySourceVertexName(sourceVertexName) {
+    const sourceVertexPresent = this.isVertexPresentByVertexName(sourceVertexName);
+
+    if (sourceVertexPresent) {
+      const sourceVertex = this.getVertexByVertexName(sourceVertexName);
+
+      sourceVertex.removeOutgoingEdges();
+    }
+  }
+
+  removeEdgesByTargetVertexName(targetVertexName) {
+    const targetVertexPresent = this.isVertexPresentByVertexName(targetVertexName);
+
+    if (targetVertexPresent) {
+      const targetVertex = this.getVertexByVertexName(targetVertexName);
+
+      targetVertex.removeIncomingEdges();
     }
   }
 
@@ -244,9 +262,9 @@ class DirectedAcyclicGraph {
     } else {
       const backwardsAffectedVertices = sourceVertex.getBackwardsAffectedVertices();
 
-      DirectedAcyclicGraph.topologicallyOrderVertices(backwardsAffectedVertices);
+      topologicallyOrderVertices(backwardsAffectedVertices);
 
-      DirectedAcyclicGraph.topologicallyOrderVertices(forwardsAffectedVertices);
+      topologicallyOrderVertices(forwardsAffectedVertices);
 
       const affectedVertices = [].concat(backwardsAffectedVertices).concat(forwardsAffectedVertices),
             affectedVertexIndices = affectedVertices.map(function(affectedVertex) {
@@ -290,27 +308,6 @@ class DirectedAcyclicGraph {
     const directedAcyclicGraph = new DirectedAcyclicGraph(vertexMap);
     
     return directedAcyclicGraph;
-  }
-
-  static topologicallyOrderVertices(vertices) {  ///
-    vertices = vertices.slice();  ///
-
-    vertices.sort(function(firstVertex, secondVertex) {
-      const firstVertexIndex = firstVertex.getIndex(),
-            secondVertexIndex = secondVertex.getIndex();
-
-      if (false) {
-
-      } else  if (firstVertexIndex < secondVertexIndex) {
-        return -1;
-      } else  if (firstVertexIndex > secondVertexIndex) {
-        return +1;
-      }
-    });
-
-    const topologicallyOrderedVertices = vertices;  ///
-
-    return topologicallyOrderedVertices;
   }
 }
 
@@ -358,4 +355,25 @@ function addEdgesToVertices(topologicallyOrderedVertices, vertexMap) {
       immediateSuccessorVertex.addImmediatePredecessorVertex(immediatePredecessorVertex);
     });
   });
+}
+
+function topologicallyOrderVertices(vertices) {  ///
+  vertices = vertices.slice();  ///
+
+  vertices.sort(function(firstVertex, secondVertex) {
+    const firstVertexIndex = firstVertex.getIndex(),
+          secondVertexIndex = secondVertex.getIndex();
+
+    if (false) {
+
+    } else  if (firstVertexIndex < secondVertexIndex) {
+      return -1;
+    } else  if (firstVertexIndex > secondVertexIndex) {
+      return +1;
+    }
+  });
+
+  const topologicallyOrderedVertices = vertices;  ///
+
+  return topologicallyOrderedVertices;
 }
