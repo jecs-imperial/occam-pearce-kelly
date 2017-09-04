@@ -46,6 +46,41 @@ class Vertex {
     return predecessorVertexMap;
   }
 
+  getSuccessorVertexMap(successorVertexMap = {}) {
+    this.forEachImmediateSuccessorVertex(function(immediateSuccessorVertex) {
+      const successorVertex = immediateSuccessorVertex, ///
+            successorVertexName = successorVertex.getName();
+
+      successorVertexMap[successorVertexName] = successorVertex;
+
+      successorVertex.getSuccessorVertices(successorVertexMap);
+    });
+
+    return successorVertexMap;
+  }
+  
+  getPredecessorVertexNames() {
+    const predecessorVertices = this.getPredecessorVertices(),
+          predecessorVertexNames = predecessorVertices.map(function(predecessorVertex) {
+            const predecessorVertexName = predecessorVertex.getName();
+            
+            return predecessorVertexName;
+          });
+    
+    return predecessorVertexNames;
+  }
+
+  getSuccessorVertexNames() {
+    const successorVertices = this.getSuccessorVertices(),
+          successorVertexNames = successorVertices.map(function(successorVertex) {
+          const successorVertexName = successorVertex.getName();
+
+          return successorVertexName;
+        });
+
+    return successorVertexNames;
+  }
+
   getPredecessorVertices() {
     const predecessorVertexMap = this.getPredecessorVertexMap(),
           predecessorVertexNames = Object.keys(predecessorVertexMap),
@@ -56,6 +91,18 @@ class Vertex {
           });
 
     return predecessorVertices;
+  }
+
+  getSuccessorVertices() {
+    const successorVertexMap = this.getSuccessorVertexMap(),
+          successorVertexNames = Object.keys(successorVertexMap),
+          successorVertices = successorVertexNames.map(function(successorVertexName) {
+            const successorVertex = successorVertexMap[successorVertexName];
+  
+            return successorVertex;
+          });
+
+    return successorVertices;
   }
 
   getTopologicallyOrderedPredecessorVertexNames() {

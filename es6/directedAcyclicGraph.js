@@ -96,6 +96,20 @@ class DirectedAcyclicGraph {
     return vertexPresent;
   }
 
+  getPredecessorVertexNamesByVertexName(vertexName) {
+    const vertex = this.getVertexByVertexName(vertexName),
+          predecessorVertexNames = vertex.getPredecessorVertexNames();
+
+    return predecessorVertexNames;
+  }
+
+  getSuccessorVertexNamesByVertexName(vertexName) {
+    const vertex = this.getVertexByVertexName(vertexName),
+          successorVertexNames = vertex.getSuccessorVertexNames();
+    
+    return successorVertexNames;
+  }
+
   addVertexByVertexName(vertexName) {
     const vertexPresent = this.isVertexPresentByVertexName(vertexName);
 
