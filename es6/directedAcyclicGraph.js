@@ -6,8 +6,8 @@ const Edge = require('./edge'),
       Vertex = require('./vertex'),
       vertexUtilities = require('./utilities/vertex');
 
-const { array } = necessary,
-      { last} = array,
+const { arrayUtilities } = necessary,
+      { last} = arrayUtilities,
       { vertexNamesFromVertices, topologicallyOrderVertices } = vertexUtilities;
 
 class DirectedAcyclicGraph {
