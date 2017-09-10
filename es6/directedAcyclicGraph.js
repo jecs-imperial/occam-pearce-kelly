@@ -115,10 +115,10 @@ class DirectedAcyclicGraph {
 
     if (!vertexPresent) {
       const vertexNames = this.getVertexNames(),
-          vertexNamesLength = vertexNames.length,
-          name = vertexName,  ///
-          index = vertexNamesLength, ///
-          vertex = Vertex.fromNameAndIndex(name, index);
+            vertexNamesLength = vertexNames.length,
+            name = vertexName,  ///
+            index = vertexNamesLength, ///
+            vertex = Vertex.fromNameAndIndex(name, index);
 
       this.setVertexByVertexName(vertexName, vertex);
     }
