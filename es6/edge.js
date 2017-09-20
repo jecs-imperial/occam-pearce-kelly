@@ -17,9 +17,16 @@ class Edge {
   isEqualTo(edge) {
     const sourceVertexName = edge.getSourceVertexName(),
           targetVertexName = edge.getTargetVertexName(),
-          equalTo = ((this.sourceVertexName === sourceVertexName) && (this.targetVertexName === targetVertexName));
+          matches = this.match(sourceVertexName, targetVertexName),
+          equalTo = matches;  ///
     
     return equalTo;
+  }
+  
+  match(sourceVertexName, targetVertexName) {
+    const matches = ((this.sourceVertexName === sourceVertexName) && (this.targetVertexName === targetVertexName));
+    
+    return matches;
   }
 }
 
