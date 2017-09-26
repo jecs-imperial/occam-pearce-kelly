@@ -113,9 +113,9 @@ class DirectedAcyclicGraph {
   addEdge(edge) {
     const sourceVertexName = edge.getSourceVertexName(),
           targetVertexName = edge.getTargetVertexName(),
-          cyclicVertexNames = this.addEdgeByVertexNames(sourceVertexName, targetVertexName);
+          cyclePresent = this.addEdgeByVertexNames(sourceVertexName, targetVertexName);
 
-    return cyclicVertexNames;
+    return cyclePresent;
   }
 
   removeEdge(edge) {
@@ -126,13 +126,10 @@ class DirectedAcyclicGraph {
   }
 
   addEdgeByVertexNames(sourceVertexName, targetVertexName) {
-    let cyclicVertices = null;
+    let cyclePresent = false;
 
     if (sourceVertexName === targetVertexName) {
-      const cyclicVertexName = sourceVertexName,  ///
-            cyclicVertex = this.getVertexByVertexName(cyclicVertexName);
-
-        cyclicVertices = [cyclicVertex];
+      cyclePresent = true;
     } else {
       const sourceVertex = this.addVertexByVertexName(sourceVertexName),
             targetVertex = this.addVertexByVertexName(targetVertexName),
@@ -144,12 +141,10 @@ class DirectedAcyclicGraph {
               invalidatingEdge = (sourceVertexIndex > targetVertexIndex);
 
         if (invalidatingEdge) {
-          cyclicVertices = validateEdgeByVertices(sourceVertex, targetVertex);
+          cyclePresent = addEdgeByVertices(sourceVertex, targetVertex);
         }
 
-        const cycleMissing = (cyclicVertices === null); ///
-
-        if (cycleMissing) {
+        if (!cyclePresent) {
           const immediatePredecessorVertex = sourceVertex, ///
                 immediateSuccessorVertex = targetVertex; ///
 
@@ -160,11 +155,7 @@ class DirectedAcyclicGraph {
       }
     }
     
-    const cyclicVertexNames = (cyclicVertices !== null) ?
-                                vertexNamesFromVertices(cyclicVertices) :
-                                  null;
-
-    return cyclicVertexNames;
+    return cyclePresent;
   }
 
   removeEdgeByVertexNames(sourceVertexName, targetVertexName) {
@@ -172,7 +163,7 @@ class DirectedAcyclicGraph {
 
     if (edgePresent) {
       const sourceVertex = this.getVertexByVertexName(sourceVertexName),
-          targetVertex = this.getVertexByVertexName(targetVertexName);
+           targetVertex = this.getVertexByVertexName(targetVertexName);
 
       sourceVertex.removeImmediateSuccessorVertex(targetVertex);
       targetVertex.removeImmediatePredecessorVertex(sourceVertex);
@@ -287,16 +278,12 @@ class DirectedAcyclicGraph {
 
 module.exports = DirectedAcyclicGraph;
 
-function validateEdgeByVertices(sourceVertex, targetVertex) {
-  let cyclicVertices = null;
-
+function addEdgeByVertices(sourceVertex, targetVertex) {
   const forwardsAffectedVertices = targetVertex.getForwardsAffectedVertices(sourceVertex),
         lastForwardsAffectedVertex = last(forwardsAffectedVertices),
         cyclePresent = (lastForwardsAffectedVertex === sourceVertex);
 
-  if (cyclePresent) {
-    cyclicVertices = forwardsAffectedVertices;
-  } else {
+  if (!cyclePresent) {
     const backwardsAffectedVertices = sourceVertex.getBackwardsAffectedVertices();
 
     topologicallyOrderVertices(backwardsAffectedVertices);
@@ -319,7 +306,7 @@ function validateEdgeByVertices(sourceVertex, targetVertex) {
     });
   }
 
-  return cyclicVertices;
+  return cyclePresent;
 }
 
 function vertexMapFromVertexNames(vertexNames) {
