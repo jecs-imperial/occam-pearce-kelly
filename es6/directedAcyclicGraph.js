@@ -281,12 +281,12 @@ module.exports = DirectedAcyclicGraph;
 function addEdgeByVertices(sourceVertex, targetVertex) {
   let success = false;
 
-  const forwardsAffectedVertices = targetVertex.getForwardsAffectedVertices(sourceVertex),
+  const forwardsAffectedVertices = targetVertex.retrieveForwardsAffectedVertices(sourceVertex),
         lastForwardsAffectedVertex = last(forwardsAffectedVertices),
         resultsInCycle = (lastForwardsAffectedVertex === sourceVertex);
 
   if (!resultsInCycle) {
-    const backwardsAffectedVertices = sourceVertex.getBackwardsAffectedVertices();
+    const backwardsAffectedVertices = sourceVertex.retrieveBackwardsAffectedVertices();
 
     topologicallyOrderVertices(backwardsAffectedVertices);
 

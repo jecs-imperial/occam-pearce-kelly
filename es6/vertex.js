@@ -116,38 +116,23 @@ class Vertex {
     return topologicallyOrderedPredecessorVertexNames;
   }
   
-  getForwardsAffectedVertices(sourceVertex) {
-    const forwardsAffectedVertices = [];
-
-    this.forwardsDepthFirstSearch(function(visitedVertex) {
-      const forwardsAffectedVertex = visitedVertex,  ///
-            terminate = (forwardsAffectedVertex === sourceVertex);  ///
-
-      forwardsAffectedVertices.push(forwardsAffectedVertex);
-
+  retrieveForwardsAffectedVertices(sourceVertex) {
+    const forwardsAffectedVertices = this.forwardsDepthFirstSearch(function(forwardsVisitedVertex) {
+      const terminate = (forwardsVisitedVertex === sourceVertex);
+      
       return terminate;
     });
-
-    forwardsAffectedVertices.forEach(function(forwardsAffectedVertex) {
-      forwardsAffectedVertex.resetVisited();
-    });
-
+    
     return forwardsAffectedVertices;
   }
 
-  getBackwardsAffectedVertices() {
-    const backwardsAffectedVertices = [];
-
-    this.backwardsDepthFirstSearch(function(visitedVertex) {
-      const backwardsAffectedVertex = visitedVertex;  ///
-
-      backwardsAffectedVertices.push(backwardsAffectedVertex);
+  retrieveBackwardsAffectedVertices() {
+    const backwardsAffectedVertices = this.backwardsDepthFirstSearch(function(backwardsVisitedVertex) {
+      const terminate = false;
+      
+      return terminate;
     });
-
-    backwardsAffectedVertices.forEach(function(backwardsAffectedVertex) {
-      backwardsAffectedVertex.resetVisited();
-    });
-
+    
     return backwardsAffectedVertices;
   }
   
@@ -236,20 +221,56 @@ class Vertex {
   addImmediateSuccessorVertex(immediateSuccessorVertex) {
     this.immediateSuccessorVertices.push(immediateSuccessorVertex);
   }
-  
+
   forwardsDepthFirstSearch(callback) {
+    const forwardsVisitedVertices = [];
+
+    this.retrieveForwardsVisitedVertices(function(forwardsVisitedVertex) {
+      const terminate = callback(forwardsVisitedVertex);  ///
+
+      forwardsVisitedVertices.push(forwardsVisitedVertex);
+
+      return terminate;
+    });
+
+    forwardsVisitedVertices.forEach(function(forwardsVisitedVertex) {
+      forwardsVisitedVertex.resetVisited();
+    });
+
+    return forwardsVisitedVertices;
+  }
+
+  backwardsDepthFirstSearch(callback) {
+    const backwardsVisitedVertices = [];
+
+    this.retrieveBackwardsVisitedVertices(function(backwardsVisitedVertex) {
+      const terminate = callback(backwardsVisitedVertex);  ///
+
+      backwardsVisitedVertices.push(backwardsVisitedVertex);
+
+      return terminate;
+    });
+
+    backwardsVisitedVertices.forEach(function(backwardsVisitedVertex) {
+      backwardsVisitedVertex.resetVisited();
+    });
+
+    return backwardsVisitedVertices;
+  }
+
+  retrieveForwardsVisitedVertices(callback) {
     let terminate = false;
 
     if (this.visited === false) {
       this.visited = true;
 
-      const visitedVertex = this;  ///
+      const forwardsVisitedVertex = this;  ///
 
-      terminate = callback(visitedVertex);
+      terminate = callback(forwardsVisitedVertex);
 
       if (terminate !== true) {
         this.someImmediateSuccessorVertex(function(immediateSuccessorVertex) {
-          terminate = immediateSuccessorVertex.forwardsDepthFirstSearch(callback);
+          terminate = immediateSuccessorVertex.retrieveForwardsVisitedVertices(callback);
 
           return terminate;
         });
@@ -259,19 +280,19 @@ class Vertex {
     return terminate;
   }
 
-  backwardsDepthFirstSearch(callback) {
+  retrieveBackwardsVisitedVertices(callback) {
     let terminate = false;
 
     if (this.visited === false) {
       this.visited = true;
 
-      const visitedVertex = this;  ///
+      const backwardsVisitedVertex = this;  ///
 
-      terminate = callback(visitedVertex);
+      terminate = callback(backwardsVisitedVertex);
 
       if (terminate !== true) {
         this.someImmediatePredecessorVertex(function(immediatePredecessorVertex) {
-          terminate = immediatePredecessorVertex.backwardsDepthFirstSearch(callback);
+          terminate = immediatePredecessorVertex.retrieveBackwardsVisitedVertices(callback);
 
           return terminate;
         });
