@@ -22,8 +22,14 @@ class Edge {
     return matches;
   }
 
-  matchVertexName(vertexName) {
-    const matches = ((this.sourceVertexName === vertexName) || (this.targetVertexName === vertexName));
+  matchSourceVertexName(sourceVertexName) {
+    const matches = (this.sourceVertexName === sourceVertexName);
+
+    return matches;
+  }
+
+  matchTargetVertexName(targetVertexName) {
+    const matches = (this.targetVertexName === targetVertexName);
 
     return matches;
   }
