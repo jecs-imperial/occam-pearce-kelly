@@ -117,8 +117,8 @@ class Vertex {
   }
   
   retrieveForwardsAffectedVertices(sourceVertex) {
-    const forwardsAffectedVertices = this.forwardsDepthFirstSearch(function(forwardsVisitedVertex) {
-      const terminate = (forwardsVisitedVertex === sourceVertex);
+    const forwardsAffectedVertices = this.forwardsDepthFirstSearch(function(visitedVertex) {
+      const terminate = (visitedVertex === sourceVertex);
       
       return terminate;
     });
@@ -127,7 +127,7 @@ class Vertex {
   }
 
   retrieveBackwardsAffectedVertices() {
-    const backwardsAffectedVertices = this.backwardsDepthFirstSearch(function(backwardsVisitedVertex) {
+    const backwardsAffectedVertices = this.backwardsDepthFirstSearch(function(visitedVertex) {
       const terminate = false;
       
       return terminate;
@@ -223,39 +223,39 @@ class Vertex {
   }
 
   forwardsDepthFirstSearch(callback) {
-    const forwardsVisitedVertices = [];
+    const visitedVertices = [];
 
-    this.retrieveForwardsVisitedVertices(function(forwardsVisitedVertex) {
-      const terminate = callback(forwardsVisitedVertex);  ///
+    this.retrieveForwardsVisitedVertices(function(visitedVertex) {
+      const terminate = callback(visitedVertex);  ///
 
-      forwardsVisitedVertices.push(forwardsVisitedVertex);
+      visitedVertices.push(visitedVertex);
 
       return terminate;
     });
 
-    forwardsVisitedVertices.forEach(function(forwardsVisitedVertex) {
-      forwardsVisitedVertex.resetVisited();
+    visitedVertices.forEach(function(visitedVertex) {
+      visitedVertex.resetVisited();
     });
 
-    return forwardsVisitedVertices;
+    return visitedVertices;
   }
 
   backwardsDepthFirstSearch(callback) {
-    const backwardsVisitedVertices = [];
+    const visitedVertices = [];
 
-    this.retrieveBackwardsVisitedVertices(function(backwardsVisitedVertex) {
-      const terminate = callback(backwardsVisitedVertex);  ///
+    this.retrieveBackwardsVisitedVertices(function(visitedVertex) {
+      const terminate = callback(visitedVertex);  ///
 
-      backwardsVisitedVertices.push(backwardsVisitedVertex);
+      visitedVertices.push(visitedVertex);
 
       return terminate;
     });
 
-    backwardsVisitedVertices.forEach(function(backwardsVisitedVertex) {
-      backwardsVisitedVertex.resetVisited();
+    visitedVertices.forEach(function(visitedVertex) {
+      visitedVertex.resetVisited();
     });
 
-    return backwardsVisitedVertices;
+    return visitedVertices;
   }
 
   retrieveForwardsVisitedVertices(callback) {
@@ -264,9 +264,9 @@ class Vertex {
     if (this.visited === false) {
       this.visited = true;
 
-      const forwardsVisitedVertex = this;  ///
+      const visitedVertex = this;  ///
 
-      terminate = callback(forwardsVisitedVertex);
+      terminate = callback(visitedVertex);
 
       if (terminate !== true) {
         this.someImmediateSuccessorVertex(function(immediateSuccessorVertex) {
@@ -286,9 +286,9 @@ class Vertex {
     if (this.visited === false) {
       this.visited = true;
 
-      const backwardsVisitedVertex = this;  ///
+      const visitedVertex = this;  ///
 
-      terminate = callback(backwardsVisitedVertex);
+      terminate = callback(visitedVertex);
 
       if (terminate !== true) {
         this.someImmediatePredecessorVertex(function(immediatePredecessorVertex) {
