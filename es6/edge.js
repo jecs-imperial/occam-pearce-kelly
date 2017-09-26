@@ -14,13 +14,12 @@ class Edge {
     return this.targetVertexName;
   }
   
-  isEqualTo(edge) {
+  match(edge) {
     const sourceVertexName = edge.getSourceVertexName(),
           targetVertexName = edge.getTargetVertexName(),
-          matches = this.matchVertexNames(sourceVertexName, targetVertexName),
-          equalTo = matches;  ///
+          matches = ((this.sourceVertexName === sourceVertexName) && (this.targetVertexName === targetVertexName));
     
-    return equalTo;
+    return matches;
   }
 
   matchVertexName(vertexName) {
