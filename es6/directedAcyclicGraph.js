@@ -113,9 +113,9 @@ class DirectedAcyclicGraph {
   addEdge(edge) {
     const sourceVertexName = edge.getSourceVertexName(),
           targetVertexName = edge.getTargetVertexName(),
-          cyclePresent = this.addEdgeByVertexNames(sourceVertexName, targetVertexName);
+          success = this.addEdgeByVertexNames(sourceVertexName, targetVertexName);
 
-    return cyclePresent;
+    return success;
   }
 
   removeEdge(edge) {
@@ -126,10 +126,10 @@ class DirectedAcyclicGraph {
   }
 
   addEdgeByVertexNames(sourceVertexName, targetVertexName) {
-    let cyclePresent = false;
+    let success = false;
 
     if (sourceVertexName === targetVertexName) {
-      cyclePresent = true;
+      success = true;
     } else {
       const sourceVertex = this.addVertexByVertexName(sourceVertexName),
             targetVertex = this.addVertexByVertexName(targetVertexName),
@@ -141,10 +141,10 @@ class DirectedAcyclicGraph {
               invalidatingEdge = (sourceVertexIndex > targetVertexIndex);
 
         if (invalidatingEdge) {
-          cyclePresent = addEdgeByVertices(sourceVertex, targetVertex);
+          success = addEdgeByVertices(sourceVertex, targetVertex);
         }
 
-        if (!cyclePresent) {
+        if (!success) {
           const immediatePredecessorVertex = sourceVertex, ///
                 immediateSuccessorVertex = targetVertex; ///
 
@@ -155,7 +155,7 @@ class DirectedAcyclicGraph {
       }
     }
     
-    return cyclePresent;
+    return success;
   }
 
   removeEdgeByVertexNames(sourceVertexName, targetVertexName) {
@@ -279,11 +279,13 @@ class DirectedAcyclicGraph {
 module.exports = DirectedAcyclicGraph;
 
 function addEdgeByVertices(sourceVertex, targetVertex) {
+  let success = false;
+
   const forwardsAffectedVertices = targetVertex.getForwardsAffectedVertices(sourceVertex),
         lastForwardsAffectedVertex = last(forwardsAffectedVertices),
-        cyclePresent = (lastForwardsAffectedVertex === sourceVertex);
+        resultInCycle = (lastForwardsAffectedVertex === sourceVertex);
 
-  if (!cyclePresent) {
+  if (!resultInCycle) {
     const backwardsAffectedVertices = sourceVertex.getBackwardsAffectedVertices();
 
     topologicallyOrderVertices(backwardsAffectedVertices);
@@ -304,9 +306,11 @@ function addEdgeByVertices(sourceVertex, targetVertex) {
 
       affectedVertex.setIndex(affectedVertexIndex);
     });
+
+    success = true;
   }
 
-  return cyclePresent;
+  return success;
 }
 
 function vertexMapFromVertexNames(vertexNames) {
