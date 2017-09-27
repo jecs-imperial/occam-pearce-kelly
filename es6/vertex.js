@@ -269,7 +269,7 @@ class Vertex {
       terminate = callback(visitedVertex);
 
       if (terminate !== true) {
-        this.someImmediateSuccessorVertex(function(immediateSuccessorVertex) {
+        visitedVertex.someImmediateSuccessorVertex(function(immediateSuccessorVertex) {
           terminate = immediateSuccessorVertex.retrieveForwardsVisitedVertices(callback);
 
           return terminate;
@@ -291,7 +291,7 @@ class Vertex {
       terminate = callback(visitedVertex);
 
       if (terminate !== true) {
-        this.someImmediatePredecessorVertex(function(immediatePredecessorVertex) {
+        visitedVertex.someImmediatePredecessorVertex(function(immediatePredecessorVertex) {
           terminate = immediatePredecessorVertex.retrieveBackwardsVisitedVertices(callback);
 
           return terminate;
