@@ -85,20 +85,6 @@ class DirectedAcyclicGraph {
     return vertexPresent;
   }
 
-  getPredecessorVertexNamesByVertexName(vertexName) {
-    const vertex = this.getVertexByVertexName(vertexName),
-          predecessorVertexNames = vertex.getPredecessorVertexNames();
-
-    return predecessorVertexNames;
-  }
-
-  getSuccessorVertexNamesByVertexName(vertexName) {
-    const vertex = this.getVertexByVertexName(vertexName),
-          successorVertexNames = vertex.getSuccessorVertexNames();
-    
-    return successorVertexNames;
-  }
-
   getTopologicallyOrderedVertexNames() {
     const vertices = this.getVertices();
 

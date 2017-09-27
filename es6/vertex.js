@@ -59,28 +59,6 @@ class Vertex {
     return successorVertexMap;
   }
   
-  getPredecessorVertexNames() {
-    const predecessorVertices = this.getPredecessorVertices(),
-          predecessorVertexNames = predecessorVertices.map(function(predecessorVertex) {
-            const predecessorVertexName = predecessorVertex.getName();
-            
-            return predecessorVertexName;
-          });
-    
-    return predecessorVertexNames;
-  }
-
-  getSuccessorVertexNames() {
-    const successorVertices = this.getSuccessorVertices(),
-          successorVertexNames = successorVertices.map(function(successorVertex) {
-          const successorVertexName = successorVertex.getName();
-
-          return successorVertexName;
-        });
-
-    return successorVertexNames;
-  }
-
   getPredecessorVertices() {
     const predecessorVertexMap = this.getPredecessorVertexMap(),
           predecessorVertexNames = Object.keys(predecessorVertexMap),
@@ -210,10 +188,6 @@ class Vertex {
     this.immediateSuccessorVertices = [];
   }
 
-  resetVisited() {
-    this.visited = false;
-  }
-
   addImmediatePredecessorVertex(immediatePredecessorVertex) {
     this.immediatePredecessorVertices.push(immediatePredecessorVertex);
   }
@@ -316,6 +290,10 @@ class Vertex {
 
   someImmediateSuccessorVertex(callback) {
     this.immediateSuccessorVertices.some(callback);
+  }
+
+  resetVisited() {
+    this.visited = false;
   }
 
   static fromNameAndIndex(name, index) {
