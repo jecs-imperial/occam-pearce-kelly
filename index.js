@@ -1,8 +1,6 @@
 'use strict';
 
-var parsers = {
+module.exports = {
   'Edge': require('./lib/edge'),
   'DirectedAcyclicGraph': require('./lib/directedAcyclicGraph')
 };
-
-module.exports = parsers;
