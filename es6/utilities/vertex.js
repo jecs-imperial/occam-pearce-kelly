@@ -30,6 +30,6 @@ function topologicallyOrderVertices(vertices) {  ///
 }
 
 module.exports = {
-  vertexNamesFromVertices: vertexNamesFromVertices,
-  topologicallyOrderVertices: topologicallyOrderVertices
+  vertexNamesFromVertices,
+  topologicallyOrderVertices
 };
