@@ -93,5 +93,5 @@ http://homepages.ecs.vuw.ac.nz/~djp/files/PK-JEA07.pdf
 
 ## Contact
 
-* jecs@imperial.ac.uk
+* james.smith@openmathematics.org
 * http://djalbat.com
