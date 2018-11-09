@@ -14,55 +14,63 @@ An implementation of the Pearce-Kelly algorithm.
 
 This algorithm maintains a topological ordering of a directed acyclic graph. It does this by re-ordering whenever an edge is added, if possible, or reporting the cycle that breaks the ordering if not. An empty and therefore trivially acyclic directed graph can be created with the `fromNothing()` factory method. Then edges and vertices can be added to it incrementally: 
 
-    const pearckelly = require('occam-pearce-kelly');
+```js
+const pearckelly = require('occam-pearce-kelly');
 
-    const { DirectedAcyclicGraph } = pearcekelly;
+const { DirectedAcyclicGraph } = pearcekelly;
 
-    const directedAcyclicGraph = DirectedAcyclicGraph.fromNothing(),
-          vertexName = 'i',
-          sourceVertexName = 'j',
-          targetVertexName = 'k';
-            
-    directedAcyclicGraph.addVertexByName(vertexName);    
-    
-    directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
+const directedAcyclicGraph = DirectedAcyclicGraph.fromNothing(),
+      vertexName = 'i',
+      sourceVertexName = 'j',
+      targetVertexName = 'k';
+
+directedAcyclicGraph.addVertexByName(vertexName);
+
+directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
+```
 
 Note that there is no need to added vertices explicitly, they will be added whenever necessary when edges that reference them are added.  You can also use the `fromVertexNames()` factory method. Since no edges are added, the graph is again trivially acyclic. 
 
 A better way to create a directed acyclic graph is to a create graph and topologically order its vertices by way of the [Kahn](https://github.com/occam-proof-assistant/Kahn) algorithm. These topologically ordered vertices, complete with edge information, can then be used as the input for a directed acyclic graph:
-    
-    const kahn = require('occam-kahn');
 
-    const { Graph } = kahn;
+```js
+const kahn = require('occam-kahn');
 
-    const vertexLiterals = [
-                               
-             ['a', ['b']],
-             ['b', ['c']],
-             ['d', ['c']],
-             ['e', []],
-             ['f', ['g']],
-             ['h', ['g']]
-             
-           ],
-           graph = Graph.fromVertexLiterals(vertexLiterals);
-           directedAcyclicGraph = 
-           
-             DirectedAcyclicGraph.fromTopologicallyOrderedVertices(topologicallyOrderedVertices);
+const { Graph } = kahn;
+
+const vertexLiterals = [
+
+         ['a', ['b']],
+         ['b', ['c']],
+         ['d', ['c']],
+         ['e', []],
+         ['f', ['g']],
+         ['h', ['g']]
+
+       ],
+       graph = Graph.fromVertexLiterals(vertexLiterals);
+       directedAcyclicGraph =
+
+         DirectedAcyclicGraph.fromTopologicallyOrderedVertices(topologicallyOrderedVertices);
+```
             
 From this point on, edges and vertices can again be added incrementally:
 
-    const cyclicVertexNames = 
-    
-     directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
+```js
+const cyclicVertexNames =
+
+  directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
+```
         
 The return value of the `addEdgeByVertexNames()` will be `null` if the edge does not break the topological ordering. If it does, the cycle that breaks the ordering will be returned in the form of an array of vertex names.
 
 To make use of the topological ordering, call the `getTopologicallyOrderedVertexNames()` method:
 
-    const topologicallyOrderedVertexNames = 
-    
-     directedAcyclicGraph.getTopologicallyOrderedVertexNames();
+```js
+const topologicallyOrderedVertexNames =
+
+  directedAcyclicGraph.getTopologicallyOrderedVertexNames();
+```
 
 ## Installation
 
