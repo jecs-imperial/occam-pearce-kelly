@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = {
-  'Edge': require('./lib/edge'),
-  'DirectedAcyclicGraph': require('./lib/directedAcyclicGraph')
+  Edge: require('./lib/edge'),
+  DirectedAcyclicGraph: require('./lib/directedAcyclicGraph')
 };
