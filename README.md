@@ -6,18 +6,37 @@ An implementation of the Pearce-Kelly algorithm.
 
 - [Introduction](#introduction)
 - [Installation](#installation)
+- [Usage](#usage)
 - [Building](#building)
 - [Acknowledgements](#acknowledgements)
 - [Contact](#contact)
 
 ## Introduction
 
-This algorithm maintains a topological ordering of a directed acyclic graph. It does this by re-ordering whenever an edge is added, if possible, or reporting the cycle that breaks the ordering if not. An empty and therefore trivially acyclic directed graph can be created with the `fromNothing()` factory method. Then edges and vertices can be added to it incrementally: 
+This algorithm maintains a topological ordering of a directed acyclic graph. It does this by re-ordering whenever an edge is added, if possible, or reporting the cycle that breaks the ordering if not.
+
+## Installation
+
+With [npm](https://www.npmjs.com/):
+
+    npm install occam-pearce-kelly
+
+You can also clone the repository with [Git](https://git-scm.com/)...
+
+    git clone https://github.com/jecs-imperial/occam-pearce-kelly.git
+
+...and then install the necessary modules with npm from within the project's root directory:
+
+    npm install
+
+## Usage
+
+An empty and therefore trivially acyclic directed graph can be created with the `fromNothing()` factory method. Then edges and vertices can be added to it incrementally:
 
 ```js
-const pearckelly = require('occam-pearce-kelly');
+const pearceKelly = require('occam-pearce-kelly');
 
-const { DirectedAcyclicGraph } = pearcekelly;
+const { DirectedAcyclicGraph } = pearceKelly;
 
 const directedAcyclicGraph = DirectedAcyclicGraph.fromNothing(),
       vertexName = 'i',
@@ -71,20 +90,6 @@ const topologicallyOrderedVertexNames =
 
   directedAcyclicGraph.getTopologicallyOrderedVertexNames();
 ```
-
-## Installation
-
-With [npm](https://www.npmjs.com/):
-
-    npm install occam-pearce-kelly
-
-You can also clone the repository with [Git](https://git-scm.com/)...
-
-    git clone https://github.com/jecs-imperial/occam-pearce-kelly.git
-
-...and then install the necessary modules with npm from within the project's root directory:
-
-    npm install
 
 ## Building
 
