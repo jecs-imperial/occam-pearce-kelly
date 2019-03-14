@@ -45,6 +45,12 @@ class Edge {
     
     return matches;
   }
+
+  static fromSourceVertexNameAndTargetVertexName(sourceVertexName, targetVertexName) {
+    const edge = new Edge(sourceVertexName, targetVertexName);
+
+    return edge;
+  }
 }
 
 module.exports = Edge;
