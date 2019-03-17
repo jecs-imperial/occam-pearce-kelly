@@ -33,6 +33,26 @@ class Vertex {
     return stranded;
   }
 
+  getImmediatePredecessorVertexNames() {
+    const immediatePredecessorVertexNames = this.immediatePredecessorVertices.map(function(immediatePredecessorVertex) {
+      const immediatePredecessorVertexName = immediatePredecessorVertex.getName();
+
+      return immediatePredecessorVertexName;
+    });
+
+    return immediatePredecessorVertexNames;
+  }
+
+  getImmediateSuccessorVertexNames() {
+    const immediateSuccessorVertexNames = this.immediateSuccessorVertices.map(function(immediateSuccessorVertex) {
+      const immediateSuccessorVertexName = immediateSuccessorVertex.getName();
+
+      return immediateSuccessorVertexName;
+    });
+
+    return immediateSuccessorVertexNames;
+  }
+
   getImmediatePredecessorVertices() {
     return this.immediatePredecessorVertices;
   }

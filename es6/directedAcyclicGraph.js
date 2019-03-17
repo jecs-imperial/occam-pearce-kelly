@@ -7,7 +7,7 @@ const Edge = require('./edge'),
       vertexUtilities = require('./utilities/vertex');
 
 const { arrayUtilities } = necessary,
-      { last} = arrayUtilities,
+      { last } = arrayUtilities,
       { vertexNamesFromVertices, topologicallyOrderVertices } = vertexUtilities;
 
 class DirectedAcyclicGraph {
@@ -44,6 +44,42 @@ class DirectedAcyclicGraph {
                        null;
 
     return vertex;
+  }
+
+  getEdgesByTargetVertexName(targetVertexName) {
+    const edges = [],
+          targetVertex = this.getVertexByVertexName(targetVertexName);
+
+    if (targetVertex !== null) {
+      const immediatePredecessorVertexNames = targetVertex.getImmediatePredecessorVertexNames(),
+            sourceVertexNames = immediatePredecessorVertexNames;  ///
+
+      sourceVertexNames.forEach(function(sourceVertexName) {
+        const edge = Edge.fromSourceVertexNameAndTargetVertexName(sourceVertexName, targetVertexName);
+
+        edges.push(edge);
+      });
+    }
+
+    return edges;
+  }
+
+  getEdgesBySourceVertexName(sourceVertexName) {
+    const edges = [],
+          sourceVertex = this.getVertexByVertexName(sourceVertexName);
+
+    if (sourceVertex !== null) {
+      const immediateSuccessorVertexNames = sourceVertex.getImmediateSuccessorVertexNames(),
+            targetVertexNames = immediateSuccessorVertexNames;  ///
+
+      targetVertexNames.forEach(function(targetVertexName) {
+        const edge = Edge.fromSourceVertexNameAndTargetVertexName(sourceVertexName, targetVertexName);
+
+        edges.push(edge);
+      });
+    }
+
+    return edges;
   }
 
   setVertexByVertexName(vertexName, vertex) {
