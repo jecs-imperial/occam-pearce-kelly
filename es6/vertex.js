@@ -25,6 +25,14 @@ class Vertex {
     return this.visited;
   }
 
+  isStranded() {
+    const immediatePredecessorVerticesLength = this.immediatePredecessorVertices.length,
+          immediateSuccessorVerticesLength = this.immediateSuccessorVertices.length,
+          stranded = ((immediatePredecessorVerticesLength === 0) && (immediateSuccessorVerticesLength === 0));
+
+    return stranded;
+  }
+
   getImmediatePredecessorVertices() {
     return this.immediatePredecessorVertices;
   }
