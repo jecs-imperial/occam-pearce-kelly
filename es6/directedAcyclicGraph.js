@@ -24,13 +24,15 @@ class DirectedAcyclicGraph {
   }
 
   getVertices() {
-    const vertices = Object.values(this.vertexMap);
+    const vertexMapValues = Object.values(this.vertexMap),
+          vertices = vertexMapValues; ///
 
     return vertices;
   }
 
   getVertexNames() {
-    const vertexNames = Object.keys(this.vertexMap);
+    const vertexMapKeys = Object.keys(this.vertexMap),
+          vertexNames = vertexMapKeys;  ///
 
     return vertexNames;
   }
@@ -48,7 +50,7 @@ class DirectedAcyclicGraph {
     this.vertexMap[vertexName] = vertex;
   }
 
-  unsetVertexByVertexName(vertexName) {
+  deleteVertexByVertexName(vertexName) {
     delete this.vertexMap[vertexName];
   }
 
@@ -64,14 +66,11 @@ class DirectedAcyclicGraph {
     let edgePresent = false;
 
     const sourceVertex = this.getVertexByVertexName(sourceVertexName),
-        targetVertex = this.getVertexByVertexName(targetVertexName),
-        sourceVertexAndTargetVertexPresent = (sourceVertex !== null) && (targetVertex !== null);
+          targetVertex = this.getVertexByVertexName(targetVertexName),
+          sourceVertexAndTargetVertexPresent = (sourceVertex !== null) && (targetVertex !== null);
 
     if (sourceVertexAndTargetVertexPresent) {
-      const targetVertexSourceVertexImmediateSuccessorVertex = sourceVertex.isVertexImmediateSuccessorVertex(targetVertex),
-            sourceVertexTargetVertexImmediatePredecessorVertex = targetVertex.isVertexImmediatePredecessorVertex(sourceVertex);
-
-      edgePresent = (targetVertexSourceVertexImmediateSuccessorVertex && sourceVertexTargetVertexImmediatePredecessorVertex);
+      edgePresent = sourceVertex.isEdgePresentByTargetVertex(targetVertex);
     }
 
     return edgePresent;
@@ -149,7 +148,7 @@ class DirectedAcyclicGraph {
 
     if (edgePresent) {
       const sourceVertex = this.getVertexByVertexName(sourceVertexName),
-             targetVertex = this.getVertexByVertexName(targetVertexName);
+            targetVertex = this.getVertexByVertexName(targetVertexName);
 
       sourceVertex.removeImmediateSuccessorVertex(targetVertex);
       targetVertex.removeImmediatePredecessorVertex(sourceVertex);
@@ -230,7 +229,27 @@ class DirectedAcyclicGraph {
         immediatePredecessorVertex.removeImmediateSuccessorVertex(immediateSuccessVertex);
       });
 
-      this.unsetVertexByVertexName(vertexName);
+      this.deleteVertexByVertexName(vertexName);
+
+      const deletedVertex = vertex, ///
+            deletedVertexIndex = deletedVertex.getIndex(),
+            vertices = this.getVertices(),
+            affectedVertices = vertices.reduce(function(affectedVertices, vertex) {
+              const vertexIndex = vertex.getIndex(),
+                    vertexAffected = (vertexIndex > deletedVertexIndex);
+
+              if (vertexAffected) {
+                const affectedVertex = vertex;  ///
+
+                affectedVertices.push(affectedVertex);
+              }
+
+              return affectedVertices;
+            }, []);
+
+      affectedVertices.forEach(function(affectedVertex) {
+        affectedVertex.decrementIndex();
+      });
     }
 
     return removedEdges;

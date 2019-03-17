@@ -17,7 +17,7 @@ function topologicallyOrderVertices(vertices) {  ///
 
     if (false) {
 
-    } else  if (firstVertexIndex < secondVertexIndex) {
+    } else if (firstVertexIndex < secondVertexIndex) {
       return -1;
     } else  if (firstVertexIndex > secondVertexIndex) {
       return +1;

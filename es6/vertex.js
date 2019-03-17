@@ -160,6 +160,10 @@ class Vertex {
     this.visited = visited;
   }
 
+  decrementIndex() {
+    this.index--;
+  }
+
   removeImmediatePredecessorVertex(immediatePredecessorVertex) {
     const index = this.immediatePredecessorVertices.indexOf(immediatePredecessorVertex),
           start = index,  ///
