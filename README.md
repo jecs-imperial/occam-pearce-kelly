@@ -34,9 +34,9 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 An empty and therefore trivially acyclic directed graph can be created with the `fromNothing()` factory method. Then edges and vertices can be added to it incrementally:
 
 ```js
-const pearceKelly = require('occam-pearce-kelly');
+const pearcekelly = require('occam-pearce-kelly');
 
-const { DirectedAcyclicGraph } = pearceKelly;
+const { DirectedAcyclicGraph } = pearcekelly;
 
 const directedAcyclicGraph = DirectedAcyclicGraph.fromNothing(),
       vertexName = 'i',
@@ -48,7 +48,7 @@ directedAcyclicGraph.addVertexByName(vertexName);
 directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
 ```
 
-Note that there is no need to added vertices explicitly, they will be added whenever necessary when edges that reference them are added.  You can also use the `fromVertexNames()` factory method. Since no edges are added, the graph is again trivially acyclic. 
+Note that there is no need to added vertices explicitly, they will be added whenever necessary when edges that reference them are added. You can also use the `fromVertexNames()` factory method. Since no edges are added, the graph is again trivially acyclic.
 
 A better way to create a directed acyclic graph is to a create graph and topologically order its vertices by way of the [Kahn](https://github.com/occam-proof-assistant/Kahn) algorithm. These topologically ordered vertices, complete with edge information, can then be used as the input for a directed acyclic graph:
 
