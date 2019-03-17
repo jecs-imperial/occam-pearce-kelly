@@ -17,8 +17,8 @@ class DirectedAcyclicGraph {
 
   isEmpty() {
     const vertices = this.getVertices(),
-        verticesLength = vertices.length,
-        empty = (verticesLength === 0);
+          verticesLength = vertices.length,
+          empty = (verticesLength === 0);
 
     return empty;
   }
@@ -69,7 +69,7 @@ class DirectedAcyclicGraph {
 
     if (sourceVertexAndTargetVertexPresent) {
       const targetVertexSourceVertexImmediateSuccessorVertex = sourceVertex.isVertexImmediateSuccessorVertex(targetVertex),
-          sourceVertexTargetVertexImmediatePredecessorVertex = targetVertex.isVertexImmediatePredecessorVertex(sourceVertex);
+            sourceVertexTargetVertexImmediatePredecessorVertex = targetVertex.isVertexImmediatePredecessorVertex(sourceVertex);
 
       edgePresent = (targetVertexSourceVertexImmediateSuccessorVertex && sourceVertexTargetVertexImmediatePredecessorVertex);
     }
@@ -149,7 +149,7 @@ class DirectedAcyclicGraph {
 
     if (edgePresent) {
       const sourceVertex = this.getVertexByVertexName(sourceVertexName),
-           targetVertex = this.getVertexByVertexName(targetVertexName);
+             targetVertex = this.getVertexByVertexName(targetVertexName);
 
       sourceVertex.removeImmediateSuccessorVertex(targetVertex);
       targetVertex.removeImmediatePredecessorVertex(sourceVertex);
@@ -181,10 +181,10 @@ class DirectedAcyclicGraph {
 
     if (!vertexPresent) {
       const vertexNames = this.getVertexNames(),
-          vertexNamesLength = vertexNames.length,
-          name = vertexName,  ///
-          index = vertexNamesLength, ///
-          vertex = Vertex.fromNameAndIndex(name, index);
+            vertexNamesLength = vertexNames.length,
+            name = vertexName,  ///
+            index = vertexNamesLength, ///
+            vertex = Vertex.fromNameAndIndex(name, index);
 
       this.setVertexByVertexName(vertexName, vertex);
     }
