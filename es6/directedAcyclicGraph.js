@@ -46,6 +46,20 @@ class DirectedAcyclicGraph {
     return vertex;
   }
 
+  getPredecessorVertexNamesByVertexName(vertexName) {
+    const vertex = this.getVertexByVertexName(vertexName),
+          predecessorVertexNames = vertex.getPredecessorVertexNames();
+
+    return predecessorVertexNames;
+  }
+
+  getSuccessorVertexNamesByVertexName(vertexName) {
+    const vertex = this.getVertexByVertexName(vertexName),
+          successorVertexNames = vertex.getSuccessorVertexNames();
+
+    return successorVertexNames;
+  }
+
   getEdgesByTargetVertexName(targetVertexName) {
     const edges = [],
           targetVertex = this.getVertexByVertexName(targetVertexName);

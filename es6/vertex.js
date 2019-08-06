@@ -86,7 +86,29 @@ class Vertex {
 
     return successorVertexMap;
   }
-  
+
+  getPredecessorVertexNames() {
+    const predecessorVertices = this.getPredecessorVertices(),
+          predecessorVertexNames = predecessorVertices.map((predecessorVertex) => {
+            const predecessorVertexName = predecessorVertex.getName();
+
+            return predecessorVertexName;
+          });
+
+    return predecessorVertexNames;
+  }
+
+  getSuccessorVertexNames() {
+    const successorVertices = this.getSuccessorVertices(),
+        successorVertexNames = successorVertices.map((successorVertex) => {
+          const successorVertexName = successorVertex.getName();
+
+          return successorVertexName;
+        });
+
+    return successorVertexNames;
+  }
+
   getPredecessorVertices() {
     const predecessorVertexMap = this.getPredecessorVertexMap(),
           predecessorVertexNames = Object.keys(predecessorVertexMap),
