@@ -68,7 +68,7 @@ class Vertex {
 
       predecessorVertexMap[predecessorVertexName] = predecessorVertex;
 
-      predecessorVertex.getPredecessorVertices(predecessorVertexMap);
+      predecessorVertex.getPredecessorVertexMap(predecessorVertexMap);
     });
 
     return predecessorVertexMap;
@@ -81,7 +81,7 @@ class Vertex {
 
       successorVertexMap[successorVertexName] = successorVertex;
 
-      successorVertex.getSuccessorVertices(successorVertexMap);
+      successorVertex.getSuccessorVertexMap(successorVertexMap);
     });
 
     return successorVertexMap;
