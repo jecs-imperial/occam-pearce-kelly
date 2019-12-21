@@ -354,7 +354,9 @@ function addEdgeByVertices(sourceVertex, targetVertex) {
             return affectedVertexIndex;
           });
 
-    affectedVertexIndices.sort();
+    affectedVertexIndices.sort(function(indexA, indexB) {
+      return indexA - indexB;
+    });
 
     affectedVertices.forEach(function(affectedVertex, index) {
       const affectedVertexIndex = affectedVertexIndices[index];
