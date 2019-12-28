@@ -167,26 +167,26 @@ class DirectedAcyclicGraph {
       const sourceVertex = this.addVertexByVertexName(sourceVertexName),
             targetVertex = this.addVertexByVertexName(targetVertexName),
             edgePresent = sourceVertex.isEdgePresentByTargetVertex(targetVertex);
-
-      if (!edgePresent) {
+      
+      if (edgePresent) {
+        success = true;
+      } else {
         const sourceVertexIndex = sourceVertex.getIndex(),
               targetVertexIndex = targetVertex.getIndex(),
               invalidatingEdge = (sourceVertexIndex > targetVertexIndex);
 
-        if (invalidatingEdge) {
-          success = addEdgeByVertices(sourceVertex, targetVertex);
-        } else {
-          success = true;
+        success = invalidatingEdge ?
+                    addInvalidatingEdgeByVertices(sourceVertex, targetVertex) :
+                      true;
+
+        if (success) {
+          const immediatePredecessorVertex = sourceVertex, ///
+                immediateSuccessorVertex = targetVertex; ///
+
+          immediatePredecessorVertex.addImmediateSuccessorVertex(immediateSuccessorVertex);
+
+          immediateSuccessorVertex.addImmediatePredecessorVertex(immediatePredecessorVertex);
         }
-      }
-
-      if (success) {
-        const immediatePredecessorVertex = sourceVertex, ///
-              immediateSuccessorVertex = targetVertex; ///
-
-        immediatePredecessorVertex.addImmediateSuccessorVertex(immediateSuccessorVertex);
-
-        immediateSuccessorVertex.addImmediatePredecessorVertex(immediatePredecessorVertex);
       }
     }
     
@@ -333,7 +333,7 @@ class DirectedAcyclicGraph {
 
 module.exports = DirectedAcyclicGraph;
 
-function addEdgeByVertices(sourceVertex, targetVertex) {
+function addInvalidatingEdgeByVertices(sourceVertex, targetVertex) {
   let success = false;
 
   const forwardsAffectedVertices = targetVertex.retrieveForwardsAffectedVertices(sourceVertex),
