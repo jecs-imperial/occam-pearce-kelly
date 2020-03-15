@@ -31,13 +31,16 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 ## Usage
 
-An empty and therefore trivially acyclic directed graph can be created with the `fromNothing()` factory method. Then edges and vertices can be added to it incrementally:
-
 ```js
 const pearcekelly = require('occam-pearce-kelly');
 
 const { DirectedAcyclicGraph } = pearcekelly;
 
+...
+```
+An empty and therefore trivially acyclic directed graph can be created with the `fromNothing()` factory method. Then edges and vertices can be added to it incrementally:
+
+```js
 const directedAcyclicGraph = DirectedAcyclicGraph.fromNothing(),
       vertexName = 'i',
       sourceVertexName = 'j',
