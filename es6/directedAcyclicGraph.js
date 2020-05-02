@@ -1,13 +1,12 @@
 "use strict";
 
-const necessary = require("necessary");
+import { arrayUtilities } from "necessary";
 
-const Edge = require("./edge"),
-      Vertex = require("./vertex"),
-      vertexUtilities = require("./utilities/vertex");
+import Edge from "./edge";
+import Vertex from "./vertex";
+import vertexUtilities from "./utilities/vertex";
 
-const { arrayUtilities } = necessary,
-      { last } = arrayUtilities,
+const { last } = arrayUtilities,
       { vertexNamesFromVertices, topologicallyOrderVertices } = vertexUtilities;
 
 class DirectedAcyclicGraph {

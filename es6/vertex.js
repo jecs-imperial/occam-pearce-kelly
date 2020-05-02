@@ -1,8 +1,6 @@
 "use strict";
 
-const vertexUtilities = require("./utilities/vertex");
-
-const { vertexNamesFromVertices, topologicallyOrderVertices } = vertexUtilities;
+import { vertexNamesFromVertices, topologicallyOrderVertices } from "./utilities/vertex";
 
 class Vertex {
   constructor(name, index, visited, immediatePredecessorVertices, immediateSuccessorVertices) {
