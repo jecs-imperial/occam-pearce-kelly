@@ -31,20 +31,15 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 ## Usage
 
-```
-const pearcekelly = require('occam-pearce-kelly');
-
-const { DirectedAcyclicGraph } = pearcekelly;
-
-...
-```
 An empty and therefore trivially acyclic directed graph can be created with the `fromNothing()` factory method. Then edges and vertices can be added to it incrementally:
 
 ```
+import { DirectedAcyclicGraph } from "occam-pearce-kelly";
+
 const directedAcyclicGraph = DirectedAcyclicGraph.fromNothing(),
-      vertexName = 'i',
-      sourceVertexName = 'j',
-      targetVertexName = 'k';
+      vertexName = "i",
+      sourceVertexName = "j",
+      targetVertexName = "k";
 
 directedAcyclicGraph.addVertexByName(vertexName);
 
@@ -53,35 +48,30 @@ directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
 
 Note that there is no need to add vertices explicitly, they will be added whenever necessary when edges that reference them are added. You can also use the `fromVertexNames()` factory method. Since no edges are added, the graph is again trivially acyclic.
 
-A better way to create a directed acyclic graph is to a create graph and topologically order its vertices by way of the [Kahn](https://github.com/occam-proof-assistant/Kahn) algorithm. These topologically ordered vertices, complete with edge information, can then be used as the input for a directed acyclic graph:
+A better way to create a directed acyclic graph is to a create graph and topologically order its vertices by way of the [Kahn](https://github.com/jecs-imperial/occam-kahn) algorithm. These topologically ordered vertices, complete with edge information, can then be used as the input for a directed acyclic graph:
 
 ```
-const kahn = require('occam-kahn');
-
-const { Graph } = kahn;
+import { Graph } from "occam-kahn";
 
 const vertexLiterals = [
 
-         ['a', ['b']],
-         ['b', ['c']],
-         ['d', ['c']],
-         ['e', []],
-         ['f', ['g']],
-         ['h', ['g']]
+         ["a", ["b"]],
+         ["b", ["c"]],
+         ["d", ["c"]],
+         ["e", []],
+         ["f", ["g"]],
+         ["h", ["g"]]
 
        ],
-       graph = Graph.fromVertexLiterals(vertexLiterals);
-       directedAcyclicGraph =
-
-         DirectedAcyclicGraph.fromTopologicallyOrderedVertices(topologicallyOrderedVertices);
+       graph = Graph.fromVertexLiterals(vertexLiterals),
+       topologicallyOrderedVertices = graph.getTopologicallyOrderedVertices(),
+       directedAcyclicGraph = DirectedAcyclicGraph.fromTopologicallyOrderedVertices(topologicallyOrderedVertices);
 ```
             
 From this point on, edges and vertices can again be added incrementally:
 
 ```
-const cyclicVertexNames =
-
-  directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
+const cyclicVertexNames = directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
 ```
         
 The return value of the `addEdgeByVertexNames()` will be `null` if the edge does not break the topological ordering. If it does, the cycle that breaks the ordering will be returned in the form of an array of vertex names.
@@ -89,9 +79,7 @@ The return value of the `addEdgeByVertexNames()` will be `null` if the edge does
 To make use of the topological ordering, call the `getTopologicallyOrderedVertexNames()` method:
 
 ```
-const topologicallyOrderedVertexNames =
-
-  directedAcyclicGraph.getTopologicallyOrderedVertexNames();
+const topologicallyOrderedVertexNames = directedAcyclicGraph.getTopologicallyOrderedVertexNames();
 ```
 
 ## Building
@@ -103,7 +91,9 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 ## Acknowledgements
 
-* This implementation is based on the Peace-Kelly algorithm as given in [this](http://homepages.ecs.vuw.ac.nz/~djp/files/PK-JEA07.pdf) paper.
+This implementation is based on the algorithm described in the following paper:
+
+* [A Dynamic Topological Sort Algorithm for Directed Acyclic Graphs](http://homepages.ecs.vuw.ac.nz/~djp/files/PK-JEA07.pdf) by David J. Pearce and Paul H.J. Kelly
 
 ## Contact
 
