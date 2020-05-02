@@ -65,7 +65,9 @@ const vertexLiterals = [
        ],
        graph = Graph.fromVertexLiterals(vertexLiterals),
        topologicallyOrderedVertices = graph.getTopologicallyOrderedVertices(),
-       directedAcyclicGraph = DirectedAcyclicGraph.fromTopologicallyOrderedVertices(topologicallyOrderedVertices);
+       directedAcyclicGraph =
+
+         DirectedAcyclicGraph.fromTopologicallyOrderedVertices(topologicallyOrderedVertices);
 ```
             
 From this point on, edges and vertices can again be added incrementally:
