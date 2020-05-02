@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 function vertexNamesFromVertices(vertices) {
   const vertexNames = vertices.map(function(vertex) {

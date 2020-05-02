@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const vertexUtilities = require('./utilities/vertex');
+const vertexUtilities = require("./utilities/vertex");
 
 const { vertexNamesFromVertices, topologicallyOrderVertices } = vertexUtilities;
 
