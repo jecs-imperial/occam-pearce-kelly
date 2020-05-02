@@ -1,6 +1,6 @@
-# Pearce-Kelly
+# Occam Pearce-Kelly
 
-An implementation of the Pearce-Kelly algorithm.
+An implementation of the Pearce-Kelly algorithm for [Occam](https://github.com/jecs-imperial/occam).
 
 ### Contents
 
@@ -31,7 +31,7 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 ## Usage
 
-```js
+```
 const pearcekelly = require('occam-pearce-kelly');
 
 const { DirectedAcyclicGraph } = pearcekelly;
@@ -40,7 +40,7 @@ const { DirectedAcyclicGraph } = pearcekelly;
 ```
 An empty and therefore trivially acyclic directed graph can be created with the `fromNothing()` factory method. Then edges and vertices can be added to it incrementally:
 
-```js
+```
 const directedAcyclicGraph = DirectedAcyclicGraph.fromNothing(),
       vertexName = 'i',
       sourceVertexName = 'j',
@@ -55,7 +55,7 @@ Note that there is no need to add vertices explicitly, they will be added whenev
 
 A better way to create a directed acyclic graph is to a create graph and topologically order its vertices by way of the [Kahn](https://github.com/occam-proof-assistant/Kahn) algorithm. These topologically ordered vertices, complete with edge information, can then be used as the input for a directed acyclic graph:
 
-```js
+```
 const kahn = require('occam-kahn');
 
 const { Graph } = kahn;
@@ -78,7 +78,7 @@ const vertexLiterals = [
             
 From this point on, edges and vertices can again be added incrementally:
 
-```js
+```
 const cyclicVertexNames =
 
   directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
@@ -88,7 +88,7 @@ The return value of the `addEdgeByVertexNames()` will be `null` if the edge does
 
 To make use of the topological ordering, call the `getTopologicallyOrderedVertexNames()` method:
 
-```js
+```
 const topologicallyOrderedVertexNames =
 
   directedAcyclicGraph.getTopologicallyOrderedVertexNames();
