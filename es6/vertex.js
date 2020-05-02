@@ -146,7 +146,9 @@ export default class Vertex {
     const forwardsAffectedVertices = this.forwardsDepthFirstSearch((visitedVertex) => {
       const terminate = (visitedVertex === sourceVertex);
       
-      return terminate;
+      if (terminate) {
+        return true;
+      }
     });
     
     return forwardsAffectedVertices;
@@ -155,8 +157,10 @@ export default class Vertex {
   retrieveBackwardsAffectedVertices() {
     const backwardsAffectedVertices = this.backwardsDepthFirstSearch((visitedVertex) => {
       const terminate = false;
-      
-      return terminate;
+
+      if (terminate) {
+        return true;
+      }
     });
     
     return backwardsAffectedVertices;
@@ -223,9 +227,7 @@ export default class Vertex {
   removeIncomingEdges() {
     const immediateSuccessorVertex = this; ///
     
-    this.immediatePredecessorVertices.forEach((immediatePredecessorVertex) => {
-      immediatePredecessorVertex.removeImmediateSuccessorVertex(immediateSuccessorVertex);
-    });
+    this.immediatePredecessorVertices.forEach((immediatePredecessorVertex) => immediatePredecessorVertex.removeImmediateSuccessorVertex(immediateSuccessorVertex));
 
     this.immediatePredecessorVertices = [];
   }
@@ -233,9 +235,7 @@ export default class Vertex {
   removeOutgoingEdges() {
     const immediatePredecessorVertex = this; ///
 
-    this.immediateSuccessorVertices.forEach((immediateSuccessorVertex) => {
-      immediateSuccessorVertex.removeImmediateSuccessorVertex(immediatePredecessorVertex);
-    });
+    this.immediateSuccessorVertices.forEach((immediateSuccessorVertex) => immediateSuccessorVertex.removeImmediateSuccessorVertex(immediatePredecessorVertex));
 
     this.immediateSuccessorVertices = [];
   }
