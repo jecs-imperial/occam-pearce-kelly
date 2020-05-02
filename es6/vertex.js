@@ -32,7 +32,7 @@ export default class Vertex {
   }
 
   getImmediatePredecessorVertexNames() {
-    const immediatePredecessorVertexNames = this.immediatePredecessorVertices.map(function(immediatePredecessorVertex) {
+    const immediatePredecessorVertexNames = this.immediatePredecessorVertices.map((immediatePredecessorVertex) => {
       const immediatePredecessorVertexName = immediatePredecessorVertex.getName();
 
       return immediatePredecessorVertexName;
@@ -42,7 +42,7 @@ export default class Vertex {
   }
 
   getImmediateSuccessorVertexNames() {
-    const immediateSuccessorVertexNames = this.immediateSuccessorVertices.map(function(immediateSuccessorVertex) {
+    const immediateSuccessorVertexNames = this.immediateSuccessorVertices.map((immediateSuccessorVertex) => {
       const immediateSuccessorVertexName = immediateSuccessorVertex.getName();
 
       return immediateSuccessorVertexName;
@@ -60,7 +60,7 @@ export default class Vertex {
   }
 
   getPredecessorVertexMap(predecessorVertexMap = {}) {
-    this.forEachImmediatePredecessorVertex(function(immediatePredecessorVertex) {
+    this.forEachImmediatePredecessorVertex((immediatePredecessorVertex) => {
       const predecessorVertex = immediatePredecessorVertex, ///
             predecessorVertexName = predecessorVertex.getName();
 
@@ -73,7 +73,7 @@ export default class Vertex {
   }
 
   getSuccessorVertexMap(successorVertexMap = {}) {
-    this.forEachImmediateSuccessorVertex(function(immediateSuccessorVertex) {
+    this.forEachImmediateSuccessorVertex((immediateSuccessorVertex) => {
       const successorVertex = immediateSuccessorVertex, ///
             successorVertexName = successorVertex.getName();
 
@@ -110,7 +110,7 @@ export default class Vertex {
   getPredecessorVertices() {
     const predecessorVertexMap = this.getPredecessorVertexMap(),
           predecessorVertexNames = Object.keys(predecessorVertexMap),
-          predecessorVertices = predecessorVertexNames.map(function(predecessorVertexName) {
+          predecessorVertices = predecessorVertexNames.map((predecessorVertexName) => {
             const predecessorVertex = predecessorVertexMap[predecessorVertexName];
 
             return predecessorVertex;
@@ -122,7 +122,7 @@ export default class Vertex {
   getSuccessorVertices() {
     const successorVertexMap = this.getSuccessorVertexMap(),
           successorVertexNames = Object.keys(successorVertexMap),
-          successorVertices = successorVertexNames.map(function(successorVertexName) {
+          successorVertices = successorVertexNames.map((successorVertexName) => {
             const successorVertex = successorVertexMap[successorVertexName];
   
             return successorVertex;
@@ -143,7 +143,7 @@ export default class Vertex {
   }
   
   retrieveForwardsAffectedVertices(sourceVertex) {
-    const forwardsAffectedVertices = this.forwardsDepthFirstSearch(function(visitedVertex) {
+    const forwardsAffectedVertices = this.forwardsDepthFirstSearch((visitedVertex) => {
       const terminate = (visitedVertex === sourceVertex);
       
       return terminate;
@@ -153,7 +153,7 @@ export default class Vertex {
   }
 
   retrieveBackwardsAffectedVertices() {
-    const backwardsAffectedVertices = this.backwardsDepthFirstSearch(function(visitedVertex) {
+    const backwardsAffectedVertices = this.backwardsDepthFirstSearch((visitedVertex) => {
       const terminate = false;
       
       return terminate;
@@ -223,7 +223,7 @@ export default class Vertex {
   removeIncomingEdges() {
     const immediateSuccessorVertex = this; ///
     
-    this.immediatePredecessorVertices.forEach(function(immediatePredecessorVertex) {
+    this.immediatePredecessorVertices.forEach((immediatePredecessorVertex) => {
       immediatePredecessorVertex.removeImmediateSuccessorVertex(immediateSuccessorVertex);
     });
 
@@ -233,7 +233,7 @@ export default class Vertex {
   removeOutgoingEdges() {
     const immediatePredecessorVertex = this; ///
 
-    this.immediateSuccessorVertices.forEach(function(immediateSuccessorVertex) {
+    this.immediateSuccessorVertices.forEach((immediateSuccessorVertex) => {
       immediateSuccessorVertex.removeImmediateSuccessorVertex(immediatePredecessorVertex);
     });
 
@@ -251,7 +251,7 @@ export default class Vertex {
   forwardsDepthFirstSearch(callback) {
     const visitedVertices = [];
 
-    this.retrieveForwardsVisitedVertices(function(visitedVertex) {
+    this.retrieveForwardsVisitedVertices((visitedVertex) => {
       const terminate = callback(visitedVertex);  ///
 
       visitedVertices.push(visitedVertex);
@@ -259,9 +259,7 @@ export default class Vertex {
       return terminate;
     });
 
-    visitedVertices.forEach(function(visitedVertex) {
-      visitedVertex.resetVisited();
-    });
+    visitedVertices.forEach((visitedVertex) => visitedVertex.resetVisited());
 
     return visitedVertices;
   }
@@ -269,7 +267,7 @@ export default class Vertex {
   backwardsDepthFirstSearch(callback) {
     const visitedVertices = [];
 
-    this.retrieveBackwardsVisitedVertices(function(visitedVertex) {
+    this.retrieveBackwardsVisitedVertices((visitedVertex) => {
       const terminate = callback(visitedVertex);  ///
 
       visitedVertices.push(visitedVertex);
@@ -277,9 +275,7 @@ export default class Vertex {
       return terminate;
     });
 
-    visitedVertices.forEach(function(visitedVertex) {
-      visitedVertex.resetVisited();
-    });
+    visitedVertices.forEach((visitedVertex) => visitedVertex.resetVisited());
 
     return visitedVertices;
   }
@@ -295,10 +291,12 @@ export default class Vertex {
       terminate = callback(visitedVertex);
 
       if (terminate !== true) {
-        visitedVertex.someImmediateSuccessorVertex(function(immediateSuccessorVertex) {
+        visitedVertex.someImmediateSuccessorVertex((immediateSuccessorVertex) => {
           terminate = immediateSuccessorVertex.retrieveForwardsVisitedVertices(callback);
 
-          return terminate;
+          if (terminate) {
+            return true;
+          }
         });
       }
     }
@@ -317,10 +315,12 @@ export default class Vertex {
       terminate = callback(visitedVertex);
 
       if (terminate !== true) {
-        visitedVertex.someImmediatePredecessorVertex(function(immediatePredecessorVertex) {
+        visitedVertex.someImmediatePredecessorVertex((immediatePredecessorVertex) => {
           terminate = immediatePredecessorVertex.retrieveBackwardsVisitedVertices(callback);
 
-          return terminate;
+          if (terminate) {
+            return true;
+          }
         });
       }
     }

@@ -1,7 +1,7 @@
 "use strict";
 
 export function vertexNamesFromVertices(vertices) {
-  const vertexNames = vertices.map(function(vertex) {
+  const vertexNames = vertices.map((vertex) => {
     const vertexName = vertex.getName();
 
     return vertexName;
@@ -11,7 +11,7 @@ export function vertexNamesFromVertices(vertices) {
 }
 
 export function topologicallyOrderVertices(vertices) {  ///
-  vertices.sort(function(firstVertex, secondVertex) {
+  vertices.sort((firstVertex, secondVertex) => {
     const firstVertexIndex = firstVertex.getIndex(),
           secondVertexIndex = secondVertex.getIndex();
 

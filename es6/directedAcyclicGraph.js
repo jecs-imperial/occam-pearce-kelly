@@ -67,7 +67,7 @@ export default class DirectedAcyclicGraph {
       const immediatePredecessorVertexNames = targetVertex.getImmediatePredecessorVertexNames(),
             sourceVertexNames = immediatePredecessorVertexNames;  ///
 
-      sourceVertexNames.forEach(function(sourceVertexName) {
+      sourceVertexNames.forEach((sourceVertexName) => {
         const edge = Edge.fromSourceVertexNameAndTargetVertexName(sourceVertexName, targetVertexName);
 
         edges.push(edge);
@@ -85,7 +85,7 @@ export default class DirectedAcyclicGraph {
       const immediateSuccessorVertexNames = sourceVertex.getImmediateSuccessorVertexNames(),
             targetVertexNames = immediateSuccessorVertexNames;  ///
 
-      targetVertexNames.forEach(function(targetVertexName) {
+      targetVertexNames.forEach((targetVertexName) => {
         const edge = Edge.fromSourceVertexNameAndTargetVertexName(sourceVertexName, targetVertexName);
 
         edges.push(edge);
@@ -252,7 +252,7 @@ export default class DirectedAcyclicGraph {
 
       const vertex = this.getVertexByVertexName(vertexName);
 
-      vertex.forEachImmediateSuccessorVertex(function(immediateSuccessVertex) {
+      vertex.forEachImmediateSuccessorVertex((immediateSuccessVertex) => {
         const immediatePredecessorVertex = vertex,  ///
               immediatePredecessorVertexName = immediatePredecessorVertex.getName(),
               immediateSuccessVertexName = immediateSuccessVertex.getName(),
@@ -265,7 +265,7 @@ export default class DirectedAcyclicGraph {
         immediateSuccessVertex.removeImmediatePredecessorVertex(immediatePredecessorVertex);
       });
 
-      vertex.forEachImmediatePredecessorVertex(function(immediatePredecessorVertex) {
+      vertex.forEachImmediatePredecessorVertex((immediatePredecessorVertex) => {
         const immediateSuccessVertex = vertex,  ///
               immediatePredecessorVertexName = immediatePredecessorVertex.getName(),
               immediateSuccessVertexName = immediateSuccessVertex.getName(),  ///
@@ -283,7 +283,7 @@ export default class DirectedAcyclicGraph {
       const deletedVertex = vertex, ///
             deletedVertexIndex = deletedVertex.getIndex(),
             vertices = this.getVertices(),
-            affectedVertices = vertices.reduce(function(affectedVertices, vertex) {
+            affectedVertices = vertices.reduce((affectedVertices, vertex) => {
               const vertexIndex = vertex.getIndex(),
                     vertexAffected = (vertexIndex > deletedVertexIndex);
 
@@ -296,9 +296,7 @@ export default class DirectedAcyclicGraph {
               return affectedVertices;
             }, []);
 
-      affectedVertices.forEach(function(affectedVertex) {
-        affectedVertex.decrementIndex();
-      });
+      affectedVertices.forEach((affectedVertex) => affectedVertex.decrementIndex());
     }
 
     return removedEdges;
@@ -345,7 +343,7 @@ function addInvalidatingEdgeByVertices(sourceVertex, targetVertex) {
     topologicallyOrderVertices(forwardsAffectedVertices);
 
     const affectedVertices = [].concat(backwardsAffectedVertices).concat(forwardsAffectedVertices),
-          affectedVertexIndices = affectedVertices.map(function(affectedVertex) {
+          affectedVertexIndices = affectedVertices.map((affectedVertex) => {
             const affectedVertexIndex = affectedVertex.getIndex();
 
             return affectedVertexIndex;
@@ -353,7 +351,7 @@ function addInvalidatingEdgeByVertices(sourceVertex, targetVertex) {
 
     affectedVertexIndices.sort((indexA, indexB) => (indexA - indexB));
 
-    affectedVertices.forEach(function(affectedVertex, index) {
+    affectedVertices.forEach((affectedVertex, index) => {
       const affectedVertexIndex = affectedVertexIndices[index];
 
       affectedVertex.setIndex(affectedVertexIndex);
@@ -368,7 +366,7 @@ function addInvalidatingEdgeByVertices(sourceVertex, targetVertex) {
 function vertexMapFromVertexNames(vertexNames) {
   const vertexMap = {};
   
-  vertexNames.forEach(function(vertexName, index) {
+  vertexNames.forEach((vertexName, index) => {
     const name = vertexName,  ///
           vertex = Vertex.fromNameAndIndex(name, index);
 
@@ -381,7 +379,7 @@ function vertexMapFromVertexNames(vertexNames) {
 function vertexMapFromTopologicallyOrderedVertices(topologicallyOrderedVertices) {
   const vertexMap = {};
   
-  topologicallyOrderedVertices.forEach(function(topologicallyOrderedVertex, index) {
+  topologicallyOrderedVertices.forEach((topologicallyOrderedVertex, index) => {
     const name = topologicallyOrderedVertex.getName(),
           vertex = Vertex.fromNameAndIndex(name, index),
           vertexName = name;  ///
@@ -393,8 +391,8 @@ function vertexMapFromTopologicallyOrderedVertices(topologicallyOrderedVertices)
 }
 
 function addEdgesToVertices(topologicallyOrderedVertices, vertexMap) {
-  topologicallyOrderedVertices.forEach(function(topologicallyOrderedVertex) {
-    topologicallyOrderedVertex.forEachOutgoingEdge(function(outgoingEdge) {
+  topologicallyOrderedVertices.forEach((topologicallyOrderedVertex) => {
+    topologicallyOrderedVertex.forEachOutgoingEdge((outgoingEdge) => {
       const sourceVertexName = outgoingEdge.getSourceVertexName(),
             targetVertexName = outgoingEdge.getTargetVertexName(),
             immediatePredecessorVertexName = sourceVertexName,  ///
