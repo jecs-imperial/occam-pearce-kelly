@@ -4,12 +4,12 @@ import { arrayUtilities } from "necessary";
 
 import Edge from "./edge";
 import Vertex from "./vertex";
-import vertexUtilities from "./utilities/vertex";
 
-const { last } = arrayUtilities,
-      { vertexNamesFromVertices, topologicallyOrderVertices } = vertexUtilities;
+import { vertexNamesFromVertices, topologicallyOrderVertices } from "./utilities/vertex";
 
-class DirectedAcyclicGraph {
+const { last } = arrayUtilities;
+
+export default class DirectedAcyclicGraph {
   constructor(vertexMap) {
     this.vertexMap = vertexMap;
   }
@@ -329,8 +329,6 @@ class DirectedAcyclicGraph {
     return directedAcyclicGraph;
   }
 }
-
-module.exports = DirectedAcyclicGraph;
 
 function addInvalidatingEdgeByVertices(sourceVertex, targetVertex) {
   let success = false;

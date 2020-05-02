@@ -1,6 +1,6 @@
 "use strict";
 
-import { DirectedAcyclicGraph } from "../index";
+import { DirectedAcyclicGraph } from "./index";
 
 const directedAcyclicGraph = DirectedAcyclicGraph.fromNothing(),
       vertexName = "i",

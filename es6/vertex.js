@@ -2,7 +2,7 @@
 
 import { vertexNamesFromVertices, topologicallyOrderVertices } from "./utilities/vertex";
 
-class Vertex {
+export default class Vertex {
   constructor(name, index, visited, immediatePredecessorVertices, immediateSuccessorVertices) {
     this.name = name;
     this.index = index;
@@ -357,5 +357,3 @@ class Vertex {
     return dependencyVertex;
   }
 }
-
-module.exports = Vertex;

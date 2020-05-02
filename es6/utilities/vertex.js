@@ -1,6 +1,6 @@
 "use strict";
 
-function vertexNamesFromVertices(vertices) {
+export function vertexNamesFromVertices(vertices) {
   const vertexNames = vertices.map(function(vertex) {
     const vertexName = vertex.getName();
 
@@ -10,7 +10,7 @@ function vertexNamesFromVertices(vertices) {
   return vertexNames;
 }
 
-function topologicallyOrderVertices(vertices) {  ///
+export function topologicallyOrderVertices(vertices) {  ///
   vertices.sort(function(firstVertex, secondVertex) {
     const firstVertexIndex = firstVertex.getIndex(),
           secondVertexIndex = secondVertex.getIndex();
@@ -28,8 +28,3 @@ function topologicallyOrderVertices(vertices) {  ///
 
   return topologicallyOrderedVertices;
 }
-
-module.exports = {
-  vertexNamesFromVertices,
-  topologicallyOrderVertices
-};

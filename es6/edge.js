@@ -1,6 +1,6 @@
 "use strict";
 
-class Edge {
+export default class Edge {
   constructor(sourceVertexName, targetVertexName) {
     this.sourceVertexName = sourceVertexName;
     this.targetVertexName = targetVertexName;
@@ -52,5 +52,3 @@ class Edge {
     return edge;
   }
 }
-
-module.exports = Edge;
