@@ -1,3 +1,14 @@
 "use strict";
 
-import { Graph } from "../index";
+import { DirectedAcyclicGraph } from "../index";
+
+const directedAcyclicGraph = DirectedAcyclicGraph.fromNothing(),
+      vertexName = "i",
+      sourceVertexName = "j",
+      targetVertexName = "k";
+
+directedAcyclicGraph.addVertexByVertexName(vertexName);
+
+directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
+
+debugger

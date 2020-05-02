@@ -41,7 +41,7 @@ const directedAcyclicGraph = DirectedAcyclicGraph.fromNothing(),
       sourceVertexName = "j",
       targetVertexName = "k";
 
-directedAcyclicGraph.addVertexByName(vertexName);
+directedAcyclicGraph.addVertexByVertexName(vertexName);
 
 directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
 ```
