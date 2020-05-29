@@ -95,7 +95,7 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 This implementation is based on the algorithm described in the following paper:
 
-* [A Dynamic Topological Sort Algorithm for Directed Acyclic Graphs](http://homepages.ecs.vuw.ac.nz/~djp/files/PK-JEA07.pdf) by David J. Pearce and Paul H.J. Kelly
+* [A Dynamic Topological Sort Algorithm for Directed Acyclic Graphs](http://homepages.ecs.vuw.ac.nz/~djp/files/PK-JEA07.pdf) by David J. Pearce and Paul H.J. Kelly.
 
 ## Contact
 
