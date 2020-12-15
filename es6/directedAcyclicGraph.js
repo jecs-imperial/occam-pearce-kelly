@@ -45,6 +45,20 @@ export default class DirectedAcyclicGraph {
     return vertex;
   }
 
+  getImmediatePredecessorVertexNamesByVertexName(vertexName) {
+    const vertex = this.getVertexByVertexName(vertexName),
+          immediatePredecessorVertexNames = vertex.getImmediatePredecessorVertexNames();
+
+    return immediatePredecessorVertexNames;
+  }
+
+  getImmediateSuccessorVertexNamesByVertexName(vertexName) {
+    const vertex = this.getVertexByVertexName(vertexName),
+          immediateSuccessorVertexNames = vertex.getImmediateSuccessorVertexNames();
+
+    return immediateSuccessorVertexNames;
+  }
+
   getPredecessorVertexNamesByVertexName(vertexName) {
     const vertex = this.getVertexByVertexName(vertexName),
           predecessorVertexNames = vertex.getPredecessorVertexNames();

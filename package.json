@@ -1,7 +1,7 @@
 {
   "name": "occam-pearce-kelly",
   "author": "James Smith",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/jecs-imperial/occam-pearce-kelly",
   "description": "An implementation of the Pearce-Kelly algoirthm.",
@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
-    "@babel/preset-env": "^7.8.6",
+    "@babel/preset-env": "^7.12.10",
     "browserify": "^16.5.0",
     "watchful-cli": "^1.4.6"
   },

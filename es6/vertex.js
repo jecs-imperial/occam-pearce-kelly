@@ -98,11 +98,11 @@ export default class Vertex {
 
   getSuccessorVertexNames() {
     const successorVertices = this.getSuccessorVertices(),
-        successorVertexNames = successorVertices.map((successorVertex) => {
-          const successorVertexName = successorVertex.getName();
+          successorVertexNames = successorVertices.map((successorVertex) => {
+            const successorVertexName = successorVertex.getName();
 
-          return successorVertexName;
-        });
+            return successorVertexName;
+          });
 
     return successorVertexNames;
   }
