@@ -10,13 +10,13 @@ export function vertexNamesFromVertices(vertices) {
   return vertexNames;
 }
 
-export function topologicallyOrderVertices(vertices) {  ///
+export function orderVertices(vertices) {  ///
   vertices.sort((firstVertex, secondVertex) => {
     const firstVertexIndex = firstVertex.getIndex(),
           secondVertexIndex = secondVertex.getIndex();
 
     if (false) {
-
+      ///
     } else if (firstVertexIndex < secondVertexIndex) {
       return -1;
     } else  if (firstVertexIndex > secondVertexIndex) {
@@ -24,7 +24,7 @@ export function topologicallyOrderVertices(vertices) {  ///
     }
   });
 
-  const topologicallyOrderedVertices = vertices;  ///
+  const orderedVertices = vertices;  ///
 
-  return topologicallyOrderedVertices;
+  return orderedVertices;
 }

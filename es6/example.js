@@ -11,6 +11,4 @@ directedAcyclicGraph.addVertexByVertexName(vertexName);
 
 directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
 
-const topologicallyOrderedVertexNames = directedAcyclicGraph.getTopologicallyOrderedVertexNames();
-
-debugger
+const orderedVertexNames = directedAcyclicGraph.getOrderedVertexNames();

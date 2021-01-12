@@ -64,10 +64,10 @@ const vertexLiterals = [
 
        ],
        graph = Graph.fromVertexLiterals(vertexLiterals),
-       topologicallyOrderedVertices = graph.getTopologicallyOrderedVertices(),
+       orderedVertices = graph.getOrderedVertices(),
        directedAcyclicGraph =
 
-         DirectedAcyclicGraph.fromTopologicallyOrderedVertices(topologicallyOrderedVertices);
+         DirectedAcyclicGraph.fromOrderedVertices(orderedVertices);
 ```
             
 From this point on, edges and vertices can again be added incrementally:
@@ -78,10 +78,10 @@ const cyclicVertexNames = directedAcyclicGraph.addEdgeByVertexNames(sourceVertex
         
 The return value of the `addEdgeByVertexNames()` will be `null` if the edge does not break the topological ordering. If it does, the cycle that breaks the ordering will be returned in the form of an array of vertex names.
 
-To make use of the topological ordering, call the `getTopologicallyOrderedVertexNames()` method:
+To make use of the topological ordering, call the `getOrderedVertexNames()` method:
 
 ```
-const topologicallyOrderedVertexNames = directedAcyclicGraph.getTopologicallyOrderedVertexNames();
+const orderedVertexNames = directedAcyclicGraph.getOrderedVertexNames();
 ```
 
 ## Building

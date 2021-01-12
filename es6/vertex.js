@@ -1,6 +1,6 @@
 "use strict";
 
-import { vertexNamesFromVertices, topologicallyOrderVertices } from "./utilities/vertex";
+import { vertexNamesFromVertices, orderVertices } from "./utilities/vertex";
 
 export default class Vertex {
   constructor(name, index, visited, immediatePredecessorVertices, immediateSuccessorVertices) {
@@ -131,15 +131,15 @@ export default class Vertex {
     return successorVertices;
   }
 
-  getTopologicallyOrderedPredecessorVertexNames() {
+  getOrderedPredecessorVertexNames() {
     const predecessorVertices = this.getPredecessorVertices();
 
-    topologicallyOrderVertices(predecessorVertices);
+    orderVertices(predecessorVertices);
 
-    const topologicallyOrderedPredecessorVertices = predecessorVertices,  ///
-          topologicallyOrderedPredecessorVertexNames = vertexNamesFromVertices(topologicallyOrderedPredecessorVertices);
+    const orderedPredecessorVertices = predecessorVertices,  ///
+          orderedPredecessorVertexNames = vertexNamesFromVertices(orderedPredecessorVertices);
 
-    return topologicallyOrderedPredecessorVertexNames;
+    return orderedPredecessorVertexNames;
   }
   
   retrieveForwardsAffectedVertices(sourceVertex) {

@@ -5,7 +5,7 @@ import { arrayUtilities } from "necessary";
 import Edge from "./edge";
 import Vertex from "./vertex";
 
-import { vertexNamesFromVertices, topologicallyOrderVertices } from "./utilities/vertex";
+import { vertexNamesFromVertices, orderVertices } from "./utilities/vertex";
 
 const { last } = arrayUtilities;
 
@@ -147,15 +147,15 @@ export default class DirectedAcyclicGraph {
     return vertexPresent;
   }
 
-  getTopologicallyOrderedVertexNames() {
+  getOrderedVertexNames() {
     const vertices = this.getVertices();
 
-    topologicallyOrderVertices(vertices);
+    orderVertices(vertices);
 
-    const topologicallyOrderedVertices = vertices, ///
-          topologicallyOrderedVertexNames = vertexNamesFromVertices(topologicallyOrderedVertices);
+    const orderedVertices = vertices, ///
+          orderedVertexNames = vertexNamesFromVertices(orderedVertices);
 
-    return topologicallyOrderedVertexNames;
+    return orderedVertexNames;
   }
 
   addEdge(edge) {
@@ -331,10 +331,10 @@ export default class DirectedAcyclicGraph {
     return directedAcyclicGraph;
   }
 
-  static fromTopologicallyOrderedVertices(topologicallyOrderedVertices) {
-    const vertexMap = vertexMapFromTopologicallyOrderedVertices(topologicallyOrderedVertices);
+  static fromOrderedVertices(orderedVertices) {
+    const vertexMap = vertexMapFromOrderedVertices(orderedVertices);
     
-    addEdgesToVertices(topologicallyOrderedVertices, vertexMap);
+    addEdgesToVertices(orderedVertices, vertexMap);
     
     const directedAcyclicGraph = new DirectedAcyclicGraph(vertexMap);
     
@@ -352,9 +352,9 @@ function addInvalidatingEdgeByVertices(sourceVertex, targetVertex) {
   if (!resultsInCycle) {
     const backwardsAffectedVertices = sourceVertex.retrieveBackwardsAffectedVertices();
 
-    topologicallyOrderVertices(backwardsAffectedVertices);
+    orderVertices(backwardsAffectedVertices);
 
-    topologicallyOrderVertices(forwardsAffectedVertices);
+    orderVertices(forwardsAffectedVertices);
 
     const affectedVertices = [].concat(backwardsAffectedVertices).concat(forwardsAffectedVertices),
           affectedVertexIndices = affectedVertices.map((affectedVertex) => {
@@ -390,11 +390,11 @@ function vertexMapFromVertexNames(vertexNames) {
   return vertexMap;
 }
 
-function vertexMapFromTopologicallyOrderedVertices(topologicallyOrderedVertices) {
+function vertexMapFromOrderedVertices(orderedVertices) {
   const vertexMap = {};
   
-  topologicallyOrderedVertices.forEach((topologicallyOrderedVertex, index) => {
-    const name = topologicallyOrderedVertex.getName(),
+  orderedVertices.forEach((orderedVertex, index) => {
+    const name = orderedVertex.getName(),
           vertex = Vertex.fromNameAndIndex(name, index),
           vertexName = name;  ///
 
@@ -404,9 +404,9 @@ function vertexMapFromTopologicallyOrderedVertices(topologicallyOrderedVertices)
   return vertexMap;
 }
 
-function addEdgesToVertices(topologicallyOrderedVertices, vertexMap) {
-  topologicallyOrderedVertices.forEach((topologicallyOrderedVertex) => {
-    topologicallyOrderedVertex.forEachOutgoingEdge((outgoingEdge) => {
+function addEdgesToVertices(orderedVertices, vertexMap) {
+  orderedVertices.forEach((orderedVertex) => {
+    orderedVertex.forEachOutgoingEdge((outgoingEdge) => {
       const sourceVertexName = outgoingEdge.getSourceVertexName(),
             targetVertexName = outgoingEdge.getTargetVertexName(),
             immediatePredecessorVertexName = sourceVertexName,  ///
