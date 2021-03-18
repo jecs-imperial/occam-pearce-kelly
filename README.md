@@ -1,6 +1,6 @@
 # Occam Pearce-Kelly
 
-An implementation of the Pearce-Kelly algorithm for [Occam](https://github.com/jecs-imperial/occam).
+An implementation of the Pearce-Kelly algorithm for [Occam](https://github.com/djalbat/occam).
 
 ### Contents
 
@@ -23,7 +23,7 @@ With [npm](https://www.npmjs.com/):
 
 You can also clone the repository with [Git](https://git-scm.com/)...
 
-    git clone https://github.com/jecs-imperial/occam-pearce-kelly.git
+    git clone https://github.com/djalbat/occam-pearce-kelly.git
 
 ...and then install the dependencies with npm from within the project's root directory:
 
@@ -48,7 +48,7 @@ directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
 
 Note that there is no need to add vertices explicitly, they will be added whenever necessary when edges that reference them are added. You can also use the `fromVertexNames()` factory method. Since no edges are added, the graph is again trivially acyclic.
 
-A better way to create a directed acyclic graph is to a create graph and topologically order its vertices by way of the [Kahn](https://github.com/jecs-imperial/occam-kahn) algorithm. These topologically ordered vertices, complete with edge information, can then be used as the input for a directed acyclic graph:
+A better way to create a directed acyclic graph is to a create graph and topologically order its vertices by way of the [Kahn](https://github.com/djalbat/occam-kahn) algorithm. These topologically ordered vertices, complete with edge information, can then be used as the input for a directed acyclic graph:
 
 ```
 import { Graph } from "occam-kahn";
@@ -100,4 +100,3 @@ This implementation is based on the algorithm described in the following paper:
 ## Contact
 
 * james.smith@openmathematics.org
-* http://djalbat.com
