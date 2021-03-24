@@ -12,3 +12,5 @@ directedAcyclicGraph.addVertexByVertexName(vertexName);
 directedAcyclicGraph.addEdgeByVertexNames(sourceVertexName, targetVertexName);
 
 const orderedVertexNames = directedAcyclicGraph.getOrderedVertexNames();
+
+debugger
